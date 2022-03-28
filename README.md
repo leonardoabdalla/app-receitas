@@ -260,7 +260,7 @@ https://www.figma.com/file/cBDVGdqQxUuVlQp3ehW7wx/Recipes-App
 
 - Projeto em grupo.
 
-- Serão `10` dias de projeto.
+- Serão `9` dias de projeto.
 
 - Data de entrega para avaliação final do projeto: `14/04/2022 14:00`.
 
