@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { node } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
-const LoginComponent = () => {
+const LoginComponent = ({ history }) => {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  console.log(inputEmail);
+  console.log(isDisabled);
   console.log(inputPassword);
+
+  useEffect(() => {
+    const emailRegex = /\S+@\S+\.\S+/;
+    const MIN_PASS_CHARACTER = 6;
+    const boolValid = emailRegex
+      .test(inputEmail) && (inputPassword.length > MIN_PASS_CHARACTER);
+
+    if (boolValid) return setIsDisabled(false);
+    return setIsDisabled(true);
+  }, [inputEmail, inputPassword]);
+
+  const handleSubmit = () => {
+    const mealsToken = 1;
+    const cocktailsToken = 1;
+    localStorage.setItem('mealsToken', JSON.stringify(mealsToken));
+    localStorage.setItem('cocktailsToken', JSON.stringify(cocktailsToken));
+    localStorage.setItem('user', JSON.stringify({ email: inputEmail }));
+    history.push('/foods');
+  };
 
   return (
     <>
@@ -24,8 +46,9 @@ const LoginComponent = () => {
       />
       <button
         type="button"
-        onClick={ () => console.log('oi') }
+        onClick={ () => handleSubmit() }
         data-testid="login-submit-btn"
+        disabled={ isDisabled }
       >
         Enter
       </button>
@@ -33,4 +56,9 @@ const LoginComponent = () => {
 
   );
 };
-export default LoginComponent;
+
+LoginComponent.propTypes = {
+  history: node.isRequired,
+};
+
+export default withRouter(LoginComponent);
