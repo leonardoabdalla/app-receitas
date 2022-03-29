@@ -1,9 +1,15 @@
 import React from 'react';
 import FooterComponent from '../components/FooterComponent';
+import DrinksCard from '../components/DrinksCard';
+import Header from '../components/Header';
 
 function Drinks() {
   return (
-    <FooterComponent />
+    <div>
+      <Header />
+      <DrinksCard />
+      <FooterComponent />
+    </div>
   );
 }
 

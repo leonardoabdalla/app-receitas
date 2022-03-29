@@ -4,7 +4,6 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyProvider from './context/MyProvider';
 import Login from './pages/Login';
-import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import Explore from './pages/Explore';
 import Profile from './pages/Profile';
@@ -19,6 +18,7 @@ import ExploreDrinksByIngredients from './pages/ExploreDrinksByIngredients';
 import ExploreFoodsByNationalities from './pages/ExploreFoodsByNationalities';
 import FoodInProgress from './pages/FoodInProgress';
 import DrinksInProgress from './pages/DrinksInProgress';
+import Foods from './pages/Foods';
 
 function App() {
   return (
