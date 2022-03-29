@@ -7,9 +7,6 @@ const LoginComponent = ({ history }) => {
   const [inputPassword, setInputPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
 
-  console.log(isDisabled);
-  console.log(inputPassword);
-
   useEffect(() => {
     const emailRegex = /\S+@\S+\.\S+/;
     const MIN_PASS_CHARACTER = 6;
