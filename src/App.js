@@ -47,7 +47,7 @@ function App() {
             component={ ExploreDrinksByIngredients }
           />
           <Route
-            path="/explore/foods/Nationalities"
+            path="/explore/foods/nationalities"
             component={ ExploreFoodsByNationalities }
           />
           <Route path="/*" render={ () => (<h1>not found</h1>) } />

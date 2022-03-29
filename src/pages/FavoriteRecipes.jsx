@@ -1,7 +1,11 @@
 import React from 'react';
+import Header from '../components/Header';
 
 const FavoriteRecipes = () => (
-  <h1>FavoriteRecipes</h1>
+  <>
+    <Header />
+    <h1>FavoriteRecipes</h1>
+  </>
 );
 
 export default FavoriteRecipes;
