@@ -1,10 +1,10 @@
 import React from 'react';
 import FooterComponent from '../components/FooterComponent';
 
-function Profile() {
+function ExploreDrinks() {
   return (
     <FooterComponent />
   );
 }
 
-export default Profile;
+export default ExploreDrinks;

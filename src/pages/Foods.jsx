@@ -1,16 +1,16 @@
 import React from 'react';
 import FooterComponent from '../components/FooterComponent';
-import DrinksCard from '../components/DrinksCard';
 import Header from '../components/Header';
+import FoodCard from '../components/FoodCard';
 
-function Drinks() {
+function Foods() {
   return (
     <div>
       <Header />
-      <DrinksCard />
+      <FoodCard />
       <FooterComponent />
     </div>
   );
 }
 
-export default Drinks;
+export default Foods;
