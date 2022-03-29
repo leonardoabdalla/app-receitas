@@ -6,6 +6,7 @@ import FoodCard from '../components/FoodCard';
 function Foods() {
   return (
     <div>
+
       <Header />
       <FoodCard />
       <FooterComponent />
