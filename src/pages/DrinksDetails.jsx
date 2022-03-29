@@ -1,7 +1,9 @@
 import React from 'react';
 
-const DrinksDetails = () => (
-  <h1>DrinksDetails</h1>
-);
+function DrinksDetails() {
+  return (
+    <h1> Drink Details </h1>
+  );
+}
 
 export default DrinksDetails;
