@@ -26,7 +26,6 @@ const CategoryFoodFilter = () => {
       return updateFilteredFoods(getFilteredFoodsArr);
     };
     getFilteredFoods();
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [foodCategoryFilter]);
 
