@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FooterComponent from '../components/FooterComponent';
+import Header from '../components/Header';
 
 function ExploreFoods({ history }) {
   const handleClickByIngredient = () => {
@@ -12,8 +13,12 @@ function ExploreFoods({ history }) {
     history.push('/explore/foods/Nationalities');
   };
 
+  const handleClickSurprise = () => {
+  };
+
   return (
     <div>
+      <Header />
       <button
         type="button"
         data-testid="explore-by-ingredient"
@@ -31,6 +36,7 @@ function ExploreFoods({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
+        onChange={ () => handleClickSurprise() }
       >
         Surprise me!
       </button>

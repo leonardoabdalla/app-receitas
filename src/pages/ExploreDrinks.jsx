@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FooterComponent from '../components/FooterComponent';
+import Header from '../components/Header';
 
 function ExploreDrinks({ history }) {
   const handleClickByIngredient = () => {
@@ -9,6 +10,7 @@ function ExploreDrinks({ history }) {
   };
   return (
     <div>
+      <Header />
       <button
         type="button"
         data-testid="explore-by-ingredient"

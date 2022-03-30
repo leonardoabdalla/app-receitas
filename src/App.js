@@ -28,16 +28,16 @@ function App() {
           <Route exact path="/" render={ (props) => <Login { ...props } /> } />
           <Route exact path="/foods" render={ Foods } />
           <Route exact path="/foods/:id" render={ FoodDetails } />
+          <Route path="/foods/:id/in-progress" render={ FoodInProgress } />
           <Route exact path="/drinks" render={ Drinks } />
           <Route exact path="/drinks/:id" render={ DrinksDetails } />
+          <Route path="/drinks/:id/in-progress" render={ DrinksInProgress } />
           <Route exact path="/explore" component={ Explore } />
+          <Route path="/explore/drinks" component={ ExploreDrinks } />
+          <Route path="/explore/foods" component={ ExploreFoods } />
           <Route path="/profile" render={ Profile } />
           <Route path="/done-recipes" render={ DoneRecipes } />
-          <Route path="/drinks/:id/in-progress" render={ DrinksInProgress } />
-          <Route path="/foods/:id/in-progress" render={ FoodInProgress } />
           <Route path="/favorite-recipes" render={ FavoriteRecipes } />
-          <Route path="/explore/foods" component={ ExploreFoods } />
-          <Route path="/explore/drinks" component={ ExploreDrinks } />
           <Route
             path="/explore/foods/ingredients"
             component={ ExploreFoodsByIngredients }
@@ -47,7 +47,7 @@ function App() {
             component={ ExploreDrinksByIngredients }
           />
           <Route
-            path="/explore/foods/Nationalities"
+            path="/explore/foods/nationalities"
             component={ ExploreFoodsByNationalities }
           />
           <Route path="/*" render={ () => (<h1>not found</h1>) } />

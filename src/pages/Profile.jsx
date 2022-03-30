@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { shape, func } from 'prop-types';
 import FooterComponent from '../components/FooterComponent';
+import Header from '../components/Header';
 
 function Profile({ history }) {
   const [email, setEmail] = useState('');
@@ -9,7 +10,7 @@ function Profile({ history }) {
   useEffect(() => {
     const getLocalStorage = JSON.parse(localStorage.getItem('user'));
     console.log(getLocalStorage);
-    setEmail(getLocalStorage.email);
+    if (getLocalStorage !== null) return setEmail(getLocalStorage.email);
   }, []);
 
   const handleClickDone = () => {
@@ -27,6 +28,7 @@ function Profile({ history }) {
 
   return (
     <div>
+      <Header />
       <p data-testid="profile-email">{ email }</p>
       <button
         type="button"
@@ -55,7 +57,9 @@ function Profile({ history }) {
 }
 
 Profile.propTypes = {
-  history: PropTypes.node.isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 export default withRouter(Profile);

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
+import Header from '../components/Header';
 
 function Explore({ history }) {
   const handleClickExploreFoods = () => {
@@ -13,6 +14,7 @@ function Explore({ history }) {
   };
   return (
     <div>
+      <Header />
       <button
         type="button"
         data-testid="explore-foods"

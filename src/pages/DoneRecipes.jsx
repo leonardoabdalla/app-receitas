@@ -1,7 +1,11 @@
 import React from 'react';
+import Header from '../components/Header';
 
 const DoneRecipes = () => (
-  <h1>DoneRecipes</h1>
+  <>
+    <Header />
+    <h1>DoneRecipes</h1>
+  </>
 );
 
 export default DoneRecipes;

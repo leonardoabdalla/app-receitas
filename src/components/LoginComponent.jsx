@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { node } from 'prop-types';
+import { shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 const LoginComponent = ({ history }) => {
@@ -55,7 +55,9 @@ const LoginComponent = ({ history }) => {
 };
 
 LoginComponent.propTypes = {
-  history: node.isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 export default withRouter(LoginComponent);
