@@ -6,6 +6,11 @@ const MyProvider = ({ children }) => {
   const [email, setEmail] = useState('');
   const [filter, setFilter] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [foodCategoryFilter, setFoodCategoryFilter] = useState('');
+  const [drinkCategoryFilter, setDrinkCategoryFilter] = useState('');
+  const [filteredFoods, setFilteredFoods] = useState([]);
+  const [filteredDrinks, setFilteredDrinks] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
   const [search, setSearch] = useState({
     name: inputValue,
     radio: filter,
@@ -16,7 +21,6 @@ const MyProvider = ({ children }) => {
       name: inputValue,
       radio: filter,
     });
-    console.log(search);
   };
 
   const contextValue = {
@@ -29,6 +33,16 @@ const MyProvider = ({ children }) => {
     filter,
     setFilter,
     handleClick,
+    foodCategoryFilter,
+    updateFoodCategoryFilter: (category) => setFoodCategoryFilter(category),
+    drinkCategoryFilter,
+    updateDrinkCategoryFilter: (category) => setDrinkCategoryFilter(category),
+    filteredFoods,
+    updateFilteredFoods: (foods) => setFilteredFoods(foods),
+    filteredDrinks,
+    updateFilteredDrinks: (drinks) => setFilteredDrinks(drinks),
+    isFiltered,
+    updateIsFiltered: (value) => setIsFiltered(value),
   };
 
   return (
