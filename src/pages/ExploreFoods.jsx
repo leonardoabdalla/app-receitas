@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 
 function ExploreFoods({ history }) {
+  const api = 'https://www.themealdb.com/api/json/v1/1/random.php';
+  const [foodsId, setFoodsId] = useState('');
+  useEffect(() => {
+    const fetchFoods = async () => {
+      const { meals } = await fetch(api).then((response) => response.json());
+      setFoodsId(meals[0].idMeal);
+    };
+    fetchFoods();
+  }, []);
   const handleClickByIngredient = () => {
     history.push('/explore/foods/ingredients');
   };
 
   const handleClickByNationality = () => {
-    history.push('/explore/foods/Nationalities');
+    history.push('/explore/foods/nationalities');
   };
 
   const handleClickSurprise = () => {
+    history.push(`/foods/${foodsId}`);
   };
 
   return (
@@ -36,7 +46,7 @@ function ExploreFoods({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
-        onChange={ () => handleClickSurprise() }
+        onClick={ () => handleClickSurprise() }
       >
         Surprise me!
       </button>

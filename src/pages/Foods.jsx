@@ -7,7 +7,12 @@ import CategoryFoodFilter from '../components/CategoryFoodFilter';
 function Foods() {
   return (
     <div>
-
+      <button
+        type="button"
+        onClick={ () => handleClickExploreFoods() }
+      >
+        explore foods
+      </button>
       <Header />
       <CategoryFoodFilter />
       <FoodCard />
