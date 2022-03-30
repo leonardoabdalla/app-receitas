@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { node } from 'prop-types';
 import MyContext from './MyContext';
+import { fetchFoods } from '../api/services';
 
 const MyProvider = ({ children }) => {
   const [email, setEmail] = useState('');
@@ -11,34 +12,31 @@ const MyProvider = ({ children }) => {
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [filteredDrinks, setFilteredDrinks] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [search, setSearch] = useState({
-    name: inputValue,
-    radio: filter,
-  });
+  const [foods, setFoods] = useState([]);
 
-  const handleClick = () => {
-    setSearch({
-      name: inputValue,
-      radio: filter,
-    });
-  };
+  useEffect(() => {
+    const fetchFoodsFunc = async () => {
+      const getFoods = await fetchFoods();
+      return setFoods(getFoods);
+    };
+    fetchFoodsFunc();
+  }, []);
 
   const contextValue = {
     email,
     updateEmail: (value) => setEmail(value),
-    search,
-    setSearch,
     inputValue,
     setInputValue,
     filter,
     setFilter,
-    handleClick,
     foodCategoryFilter,
+    foods,
+    setFoods,
     updateFoodCategoryFilter: (category) => setFoodCategoryFilter(category),
     drinkCategoryFilter,
     updateDrinkCategoryFilter: (category) => setDrinkCategoryFilter(category),
     filteredFoods,
-    updateFilteredFoods: (foods) => setFilteredFoods(foods),
+    updateFilteredFoods: (food) => setFilteredFoods(food),
     filteredDrinks,
     updateFilteredDrinks: (drinks) => setFilteredDrinks(drinks),
     isFiltered,
