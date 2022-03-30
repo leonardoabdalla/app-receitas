@@ -51,3 +51,10 @@ export const fetchFoodById = (id) => {
     .then((data) => data.meals);
   return getFoodById;
 };
+
+export const fetchDrinkById = (id) => {
+  const getDrinkById = fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then((response) => response.json())
+    .then((data) => data.drinks);
+  return getDrinkById;
+};

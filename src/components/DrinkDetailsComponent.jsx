@@ -1,64 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { fetchFoodById } from '../api/services';
+import { fetchDrinkById } from '../api/services';
 
-const FoodDetailsComponent = ({ location: { pathname }, history }) => {
-  const [foodId, setFoodId] = useState('');
-  const [foodItem, setFoodItem] = useState({});
-  const [IngredientsArray, setIngredientsArray] = useState([]);
-  const [recomendedDrinks, setRecomendedDrinks] = useState([{}]);
+const DrinkDetailComponent = ({ location: { pathname }, history }) => {
+  const [drinkItem, setDrinkItem] = useState([{}]);
+  const [ingredientsArray, setIngredientsArray] = useState([]);
+  const [recommendedFoods, setRecommendedFoods] = useState([{}]);
 
   useEffect(() => {
-    const getPath = pathname.split('/')[2];
-    setFoodId(getPath);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getPathId = pathname.split('/')[2];
+
+    const getDrinkById = async () => {
+      const getDrink = await fetchDrinkById(getPathId);
+      return setDrinkItem(getDrink[0]);
+    };
+    getDrinkById();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (foodId) {
-      const getFoodById = async () => {
-        const getFood = await fetchFoodById(foodId);
-        return setFoodItem(getFood[0]);
-      };
-      getFoodById();
-    }
-  }, [foodId]);
-
-  useEffect(() => {
-    const getEntries = Object.entries(foodItem);
-    const filterEntries = getEntries
+    const getEntries = Object.entries(drinkItem);
+    const filteredEntries = getEntries
       .filter((entrie) => entrie[0].includes('strIngredient'));
 
-    const ingredientsArray = filterEntries
+    const ingredientsArr = filteredEntries
       .reduce((acc, entrie) => acc.concat(entrie[1]), []);
-
-    const noEmptyEleArr = ingredientsArray.filter((ingredient) => ingredient);
+    const noEmptyEleArr = ingredientsArr.filter((ingredient) => ingredient);
     setIngredientsArray(noEmptyEleArr);
 
-    const getRecomendedDrinks = foodItem.strDrinkAlternate;
-    setRecomendedDrinks(getRecomendedDrinks);
-  }, [foodItem]);
+    const getRecommended = drinkItem.strDrinkAlternate;
+    setRecommendedFoods(getRecommended);
+  }, [drinkItem]);
 
   return (
     <>
-      <h1>Food Details</h1>
-      { foodItem && (
+      <h1>Drink Details</h1>
+      { drinkItem && (
         <div>
           <h2
             data-testid="recipe-title"
           >
-            {foodItem.strMeal}
+            {drinkItem.strDrink}
           </h2>
           <h3
             data-testid="recipe-category"
           >
-            {foodItem.strCategory}
+            {drinkItem.strCategory}
           </h3>
           <img
             data-testid="recipe-photo"
-            src={ foodItem.strMealThumb }
-            alt={ `Meal: ${foodItem.strMeal}` }
+            src={ drinkItem.strDrinkThumb }
+            alt={ `Drink: ${drinkItem.strDrink}` }
             width="250px"
           />
           <div>
@@ -80,7 +73,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
           <div>
             <h3>Ingredientes</h3>
             {
-              IngredientsArray
+              ingredientsArray
                 .map((ingredient, index) => (
                   <p
                     key={ index }
@@ -94,29 +87,22 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
           <p
             data-testid="instructions"
           >
-            {foodItem.strInstructions}
+            {drinkItem.strInstructions}
           </p>
-          <iframe
-            data-testid="video"
-            title={ foodItem.strMeal }
-            width="300px"
-            height="200px"
-            src={ foodItem.strYoutube && foodItem.strYoutube.replace('watch', 'embed') }
-          />
           <div>
-            {recomendedDrinks === null
+            {recommendedFoods === null
               ? <h3 data-testid="0-recomendation-card">Sem recomendações</h3>
-              : recomendedDrinks && recomendedDrinks.map((drink, index) => (
+              : recommendedFoods && recommendedFoods.map((food, index) => (
                 <div
                   data-testid={ `${index}-recomendation-card` }
                   key={ index }
-                  onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
-                  onKeyDown={ () => history.push(`/drinks/${drink.idDrink}`) }
+                  onClick={ () => history.push(`/foods/${food.idFood}`) }
+                  onKeyDown={ () => history.push(`/foods/${food.idFood}`) }
                   role="button"
                   tabIndex={ index }
                 >
-                  <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
-                  <h3>{ drink.strDrink }</h3>
+                  <img src={ food.strFoodThumb } alt={ food.strFood } />
+                  <h3>{ food.strFood }</h3>
                 </div>
               ))}
             <button
@@ -134,7 +120,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   );
 };
 
-FoodDetailsComponent.propTypes = {
+DrinkDetailComponent.propTypes = {
   location: shape({
     pathname: string.isRequired,
   }).isRequired,
@@ -143,4 +129,4 @@ FoodDetailsComponent.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(FoodDetailsComponent);
+export default withRouter(DrinkDetailComponent);
