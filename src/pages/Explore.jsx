@@ -14,7 +14,7 @@ function Explore({ history }) {
   };
   return (
     <div>
-      <Header />
+    <Header />
       <button
         type="button"
         data-testid="explore-foods"
@@ -37,5 +37,5 @@ function Explore({ history }) {
 Explore.propTypes = {
   history: PropTypes.node.isRequired,
 };
-//
+
 export default withRouter(Explore);
