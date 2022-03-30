@@ -7,6 +7,7 @@ import CategoryFoodFilter from '../components/CategoryFoodFilter';
 function Foods() {
   return (
     <div>
+
       <Header />
       <CategoryFoodFilter />
       <FoodCard />
