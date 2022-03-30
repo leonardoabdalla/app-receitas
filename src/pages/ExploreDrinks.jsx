@@ -47,5 +47,5 @@ function ExploreDrinks({ history }) {
 ExploreDrinks.propTypes = {
   history: PropTypes.node.isRequired,
 };
-
+//
 export default withRouter(ExploreDrinks);
