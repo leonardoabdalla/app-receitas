@@ -1,18 +1,18 @@
 import React from 'react';
 import FooterComponent from '../components/FooterComponent';
-import DrinksCard from '../components/DrinksCard';
 import Header from '../components/Header';
-import CategoryDrinkFilter from '../components/CategoryDrinkFilter';
+import FoodCard from '../components/FoodCard';
+import CategoryFoodFilter from '../components/CategoryFoodFilter';
 
-function Drinks() {
+function Foods() {
   return (
     <div>
       <Header />
-      <CategoryDrinkFilter />
-      <DrinksCard />
+      <CategoryFoodFilter />
+      <FoodCard />
       <FooterComponent />
     </div>
   );
 }
 
-export default Drinks;
+export default Foods;
