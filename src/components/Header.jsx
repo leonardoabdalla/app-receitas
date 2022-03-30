@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { shape, func } from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchComponent from './SearchComponent';
@@ -157,7 +157,9 @@ const Header = ({ history: { location } }) => {
 };
 
 Header.propTypes = {
-  history: PropTypes.node.isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 export default withRouter(Header);
