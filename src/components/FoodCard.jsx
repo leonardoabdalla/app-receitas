@@ -1,22 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { fetchFoods } from '../api/services';
 import MyContext from '../context/MyContext';
 
 const FoodCard = ({ history }) => {
-  const [foods, setFoods] = useState([]);
   const [arrayToRender, setArrayToRender] = useState([]);
-  const { filteredFoods, isFiltered } = useContext(MyContext);
-
-  useEffect(() => {
-    const fetchFoodsFunc = async () => {
-      const getFoods = await fetchFoods();
-      return setFoods(getFoods);
-    };
-    fetchFoodsFunc();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { filteredFoods, isFiltered, foods } = useContext(MyContext);
 
   useEffect(() => (
     isFiltered ? setArrayToRender(filteredFoods) : setArrayToRender(foods)),
