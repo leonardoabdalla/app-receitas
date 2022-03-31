@@ -10,15 +10,24 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
   const [recomendedDrinks, setRecomendedDrinks] = useState([{}]);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    const getPath = pathname.split('/')[2];
-    setFoodId(getPath);
+    const getPathId = pathname.split('/')[2];
+    setFoodId(getPathId);
     const getRecomendedDrinks = async () => {
       const getDrinks = await fetchDrinks();
       return setRecomendedDrinks(getDrinks);
     };
     getRecomendedDrinks();
+
+    const getLocalStorageDone = JSON.parse(localStorage.getItem('doneRecipes'));
+    console.log('getLocalStorageDone', getLocalStorageDone);
+
+    getLocalStorageDone?.forEach((recipe) => {
+      if (recipe.id === getPathId) return setIsDone(true);
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -150,16 +159,16 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
               })}
             </ul>
           </div>
-          <div className="start-recipe-button">
+          { !isDone && (
             <button
               type="button"
               data-testid="start-recipe-btn"
               onClick={ () => {} }
-
+              className="start-recipe-button"
             >
               Start Recipe
             </button>
-          </div>
+          )}
         </div>
       )}
     </>

@@ -9,6 +9,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArray, setQuantitiesArray] = useState([]);
   const [recommendedFoods, setRecommendedFoods] = useState([{}]);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     const getPathId = pathname.split('/')[2];
@@ -24,6 +25,12 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
       return setRecommendedFoods(getFoods);
     };
     getRecommended();
+
+    const getLocalDrinksDone = JSON.parse(localStorage.getItem('doneRecipes'));
+
+    getLocalDrinksDone?.forEach((drink) => {
+      if (drink.id === getPathId) return setIsDone(true);
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -128,15 +135,18 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
               );
             })}
           </ul>
-          <div className="start-recipe--drink-button">
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ () => {} }
-            >
-              Start Recipe
-            </button>
-          </div>
+          {
+            !isDone && (
+              <button
+                type="button"
+                data-testid="start-recipe-btn"
+                onClick={ () => {} }
+                className="start-recipe--drink-button"
+              >
+                Start Recipe
+              </button>
+            )
+          }
         </div>
       )}
     </>

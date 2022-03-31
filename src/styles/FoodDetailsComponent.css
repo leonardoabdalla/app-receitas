@@ -13,7 +13,7 @@ li {
   margin-right: 10px;
 }
 
-.start-recipe-button button {
+.start-recipe-button {
   bottom: 0;
   position: fixed;
 }
