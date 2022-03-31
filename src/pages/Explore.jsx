@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
@@ -14,7 +14,7 @@ function Explore({ history }) {
   };
   return (
     <div>
-    <Header />
+      <Header />
       <button
         type="button"
         data-testid="explore-foods"
@@ -35,7 +35,9 @@ function Explore({ history }) {
 }
 
 Explore.propTypes = {
-  history: PropTypes.node.isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 export default withRouter(Explore);

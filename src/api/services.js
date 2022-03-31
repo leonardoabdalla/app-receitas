@@ -44,3 +44,17 @@ export const fetchFilteredDrinks = (filter) => {
     return getFilteredDrinks;
   }
 };
+
+export const fetchFoodById = (id) => {
+  const getFoodById = fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then((response) => response.json())
+    .then((data) => data.meals);
+  return getFoodById;
+};
+
+export const fetchDrinkById = (id) => {
+  const getDrinkById = fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then((response) => response.json())
+    .then((data) => data.drinks);
+  return getDrinkById;
+};

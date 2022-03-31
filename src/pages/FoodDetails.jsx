@@ -1,8 +1,9 @@
 import React from 'react';
+import FoodDetailsComponent from '../components/FoodDetailsComponent';
 
 function FoodDetails() {
   return (
-    <h1> Food Details </h1>
+    <FoodDetailsComponent />
   );
 }
 

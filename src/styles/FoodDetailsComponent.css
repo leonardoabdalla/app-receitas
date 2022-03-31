@@ -1,0 +1,14 @@
+ul {
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+  list-style-type: none;
+  overflow: auto;
+  padding-left: 10px;
+  width: 63%;
+}
+
+li {
+  margin-right: 10px;
+}
