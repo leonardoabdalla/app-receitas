@@ -5,6 +5,7 @@ import { fetchDrinkById, fetchFoods } from '../api/services';
 import '../styles/DrinkDetailsComponent .css';
 
 const DrinkDetailComponent = ({ location: { pathname }, history }) => {
+  const [drinkId, setDrinkId] = useState('');
   const [drinkItem, setDrinkItem] = useState([{}]);
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArray, setQuantitiesArray] = useState([]);
@@ -14,6 +15,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
 
   useEffect(() => {
     const getPathId = pathname.split('/')[2];
+    setDrinkId(getPathId);
 
     const getDrinkById = async () => {
       const getDrink = await fetchDrinkById(getPathId);
@@ -145,7 +147,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
               <button
                 type="button"
                 data-testid="start-recipe-btn"
-                onClick={ () => {} }
+                onClick={ () => history.push(`/drinks/${drinkId}/in-progress`) }
                 className="start-recipe--drink-button"
               >
                 { buttonText }

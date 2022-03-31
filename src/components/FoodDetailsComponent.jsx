@@ -166,7 +166,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
             <button
               type="button"
               data-testid="start-recipe-btn"
-              onClick={ () => {} }
+              onClick={ () => history.push(`/foods/${foodId}/in-progress`) }
               className="start-recipe-button"
             >
               {buttonText}
