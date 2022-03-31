@@ -1,0 +1,15 @@
+ul {
+  margin: 4px, 4px;
+  padding: 4px;
+  background-color: #08c708;
+  width: 60%;
+  height: 150px;
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+li {
+margin-right: 8px;
+}

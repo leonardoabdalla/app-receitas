@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { fetchDrinkById } from '../api/services';
+import { fetchDrinkById, fetchFoods } from '../api/services';
+import '../styles/DrinkDetailsComponent .css';
 
 const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   const [drinkItem, setDrinkItem] = useState([{}]);
   const [ingredientsArray, setIngredientsArray] = useState([]);
+  const [quantitiesArray, setQuantitiesArray] = useState([]);
   const [recommendedFoods, setRecommendedFoods] = useState([{}]);
 
   useEffect(() => {
@@ -16,6 +18,12 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
       return setDrinkItem(getDrink[0]);
     };
     getDrinkById();
+
+    const getRecommended = async () => {
+      const getFoods = await fetchFoods();
+      return setRecommendedFoods(getFoods);
+    };
+    getRecommended();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -29,8 +37,12 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
     const noEmptyEleArr = ingredientsArr.filter((ingredient) => ingredient);
     setIngredientsArray(noEmptyEleArr);
 
-    const getRecommended = drinkItem.strDrinkAlternate;
-    setRecommendedFoods(getRecommended);
+    const filteredQuants = getEntries
+      .filter((entrie) => entrie[0].includes('strMeasure'));
+    const quantArr = filteredQuants
+      .reduce((acc, entrie) => acc.concat(entrie[1]), []);
+    const noEmptyQuant = quantArr.filter((quant) => quant);
+    setQuantitiesArray(noEmptyQuant);
   }, [drinkItem]);
 
   return (
@@ -46,7 +58,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
           <h3
             data-testid="recipe-category"
           >
-            {drinkItem.strCategory}
+            {`${drinkItem.strCategory} - ${drinkItem.strAlcoholic}`}
           </h3>
           <img
             data-testid="recipe-photo"
@@ -79,7 +91,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
                     key={ index }
                     data-testid={ `${index}-ingredient-name-and-measure` }
                   >
-                    {ingredient}
+                    {`${ingredient}: ${quantitiesArray[index]}`}
                   </p>
                 ))
             }
@@ -89,31 +101,40 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
           >
             {drinkItem.strInstructions}
           </p>
-          <div>
-            {recommendedFoods === null
-              ? <h3 data-testid="0-recomendation-card">Sem recomendações</h3>
-              : recommendedFoods && recommendedFoods.map((food, index) => (
-                <div
+          <ul className="recommended-box">
+            {recommendedFoods && recommendedFoods.map((food, index) => {
+              const SHOW_RECOMMENDED = 5;
+              if (index > SHOW_RECOMMENDED) return null;
+              return (
+                <li
                   data-testid={ `${index}-recomendation-card` }
                   key={ index }
-                  onClick={ () => history.push(`/foods/${food.idFood}`) }
-                  onKeyDown={ () => history.push(`/foods/${food.idFood}`) }
-                  role="button"
-                  tabIndex={ index }
                 >
-                  <img src={ food.strFoodThumb } alt={ food.strFood } />
-                  <h3>{ food.strFood }</h3>
-                </div>
-              ))}
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ () => {} }
-            >
-              Iniciar Receita
-            </button>
-          </div>
+                  <div
+                    onClick={ () => history.push(`/foods/${food.idMeal}`) }
+                    onKeyDown={ () => history.push(`/foods/${food.idMeal}`) }
+                    role="button"
+                    tabIndex={ index }
+                  >
+                    <img src={ food.strMealThumb } alt={ food.strMeal } width="100px" />
+                    <h3
+                      data-testid={ `${index}-recomendation-title` }
+                    >
+                      { food.strMeal }
 
+                    </h3>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => {} }
+          >
+            Iniciar Receita
+          </button>
         </div>
       )}
     </>
