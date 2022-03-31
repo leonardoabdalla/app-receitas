@@ -1,9 +1,9 @@
 import React from 'react';
 
-function DrinksInProgress() {
+function DrinkInProgress() {
   return (
-    <h1> Drinks In Progress </h1>
+    <h1> Drink In Progress </h1>
   );
 }
 
-export default DrinksInProgress;
+export default DrinkInProgress;
