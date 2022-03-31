@@ -3,6 +3,9 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchFoodById, fetchDrinks } from '../api/services';
 import '../styles/FoodDetailsComponent.css';
+import shareIcon from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
 
 const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [foodId, setFoodId] = useState('');
@@ -12,6 +15,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [recomendedDrinks, setRecomendedDrinks] = useState([{}]);
   const [showButton, setShowButton] = useState(true);
   const [buttonText, setButtonText] = useState('Start Recipe');
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const getPathId = pathname.split('/')[2];
@@ -68,112 +72,115 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   return (
     <>
       <h1>Food Details</h1>
-      { foodItem && (
+      <div>
+        <h2
+          data-testid="recipe-title"
+        >
+          {foodItem.strMeal}
+        </h2>
+        <h3
+          data-testid="recipe-category"
+        >
+          {foodItem.strCategory}
+        </h3>
+        <img
+          data-testid="recipe-photo"
+          src={ foodItem.strMealThumb }
+          alt={ `Meal: ${foodItem.strMeal}` }
+          width="250px"
+        />
         <div>
-          <h2
-            data-testid="recipe-title"
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ () => { copy(`http://localhost:3000${pathname}`); setIsCopied(true); } }
           >
-            {foodItem.strMeal}
-          </h2>
-          <h3
-            data-testid="recipe-category"
+            { !isCopied ? (
+              <img
+                src={ shareIcon }
+                alt="Botão de compartilhar"
+              />
+            ) : <span>Link copied!</span>}
+          </button>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ () => {} }
           >
-            {foodItem.strCategory}
-          </h3>
-          <img
-            data-testid="recipe-photo"
-            src={ foodItem.strMealThumb }
-            alt={ `Meal: ${foodItem.strMeal}` }
-            width="250px"
-          />
-          <div>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => {} }
-            >
-              Compartilhar
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-              onClick={ () => {} }
-            >
-              Favoritar
-            </button>
-          </div>
-          <div>
-            <h3>Ingredientes</h3>
-            {
-              ingredientsArray
-                .map((ingredient, index) => (
-                  <p
-                    key={ index }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    {`${ingredient}: ${quantitiesArr[index]}`}
-                  </p>
-                ))
-            }
-          </div>
-          <p
-            data-testid="instructions"
-          >
-            {foodItem.strInstructions}
-          </p>
-          <iframe
-            data-testid="video"
-            title={ foodItem.strMeal }
-            width="300px"
-            height="200px"
-            src={ foodItem.strYoutube && foodItem.strYoutube.replace('watch', 'embed') }
-          />
-          <div className="recommended-box">
-            <ul>
-              {recomendedDrinks && recomendedDrinks.map((drink, index) => {
-                const SHOW_RECOMMENDED = 5;
-                if (index > SHOW_RECOMMENDED) return null;
-                return (
-                  <li
-                    className="recommended-card"
-                    data-testid={ `${index}-recomendation-card` }
-                    key={ index }
-                  >
-                    <div
-                      onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
-                      onKeyDown={ () => history.push(`/drinks/${drink.idDrink}`) }
-                      role="button"
-                      tabIndex={ index }
-                    >
-                      <img
-                        src={ drink.strDrinkThumb }
-                        alt={ drink.strDrink }
-                        width="100px"
-                      />
-                      <h3
-                        data-testid={ `${index}-recomendation-title` }
-                      >
-                        { drink.strDrink }
-
-                      </h3>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          { showButton && (
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ () => history.push(`/foods/${foodId}/in-progress`) }
-              className="start-recipe-button"
-            >
-              {buttonText}
-            </button>
-          )}
+            Favoritar
+          </button>
         </div>
-      )}
+        <div>
+          <h3>Ingredientes</h3>
+          {
+            ingredientsArray
+              .map((ingredient, index) => (
+                <p
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${ingredient}: ${quantitiesArr[index]}`}
+                </p>
+              ))
+          }
+        </div>
+        <p
+          data-testid="instructions"
+        >
+          {foodItem.strInstructions}
+        </p>
+        <iframe
+          data-testid="video"
+          title={ foodItem.strMeal }
+          width="300px"
+          height="200px"
+          src={ foodItem.strYoutube && foodItem.strYoutube.replace('watch', 'embed') }
+        />
+        <div className="recommended-box">
+          <ul>
+            {recomendedDrinks.map((drink, index) => {
+              const SHOW_RECOMMENDED = 5;
+              if (index > SHOW_RECOMMENDED) return null;
+              return (
+                <li
+                  className="recommended-card"
+                  data-testid={ `${index}-recomendation-card` }
+                  key={ index }
+                >
+                  <div
+                    onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
+                    onKeyDown={ () => history.push(`/drinks/${drink.idDrink}`) }
+                    role="button"
+                    tabIndex={ index }
+                  >
+                    <img
+                      src={ drink.strDrinkThumb }
+                      alt={ drink.strDrink }
+                      width="100px"
+                    />
+                    <h3
+                      data-testid={ `${index}-recomendation-title` }
+                    >
+                      { drink.strDrink }
+
+                    </h3>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        { showButton && (
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => history.push(`/foods/${foodId}/in-progress`) }
+            className="start-recipe-button"
+          >
+            {buttonText}
+          </button>
+        )}
+      </div>
     </>
   );
 };

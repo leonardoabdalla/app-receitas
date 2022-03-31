@@ -3,6 +3,9 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchDrinkById, fetchFoods } from '../api/services';
 import '../styles/DrinkDetailsComponent .css';
+import shareIcon from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
 
 const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   const [drinkId, setDrinkId] = useState('');
@@ -12,6 +15,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   const [recommendedFoods, setRecommendedFoods] = useState([{}]);
   const [showButton, setShowButton] = useState(true);
   const [buttonText, setButtonText] = useState('Start Recipe');
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const getPathId = pathname.split('/')[2];
@@ -84,9 +88,14 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
             <button
               type="button"
               data-testid="share-btn"
-              onClick={ () => {} }
+              onClick={ () => { copy(`http://localhost:3000${pathname}`); setIsCopied(true); } }
             >
-              Compartilhar
+              { !isCopied ? (
+                <img
+                  src={ shareIcon }
+                  alt="Botão de compartilhar"
+                />
+              ) : <span>Link copied!</span>}
             </button>
             <button
               type="button"
