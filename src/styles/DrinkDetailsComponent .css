@@ -1,12 +1,14 @@
 ul {
-  background-color: #08c708;
+  background-color: whitesmoke;
   display: flex;
   flex-direction: row;
   height: 150px;
+  list-style-type: none;
   overflow: auto;
-  width: 60%;
+  padding-left: 10px;
+  width: 63%;
 }
 
 li {
-  margin-right: 8px;
+  margin-right: 10px;
 }
