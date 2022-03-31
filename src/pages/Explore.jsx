@@ -37,5 +37,5 @@ function Explore({ history }) {
 Explore.propTypes = {
   history: PropTypes.node.isRequired,
 };
-//
+
 export default withRouter(Explore);
