@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { shape, func } from 'prop-types';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 
@@ -45,7 +45,9 @@ function ExploreDrinks({ history }) {
 }
 
 ExploreDrinks.propTypes = {
-  history: PropTypes.node.isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 //
 export default withRouter(ExploreDrinks);
