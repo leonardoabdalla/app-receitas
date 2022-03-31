@@ -58,3 +58,33 @@ export const fetchDrinkById = (id) => {
     .then((data) => data.drinks);
   return getDrinkById;
 };
+
+export const fetchFoodByIngredient = async (ingredient) => {
+  const result = await ((await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`)).json());
+  return result.meals;
+};
+
+export const fetchFoodByName = async (name) => {
+  const result = await ((await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`)).json());
+  return result.meals;
+};
+
+export const fetchFoodByFirstLetter = async (firstLetter) => {
+  const result = await ((await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`)).json());
+  return result.meals;
+};
+
+export const fetchDrinkByIngredient = async (ingredient) => {
+  const result = await ((await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`)).json());
+  return result.drinks;
+};
+
+export const fetchDrinkByName = async (name) => {
+  const result = await ((await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)).json());
+  return result.drinks;
+};
+
+export const fetchDrinkByFirstLetter = async (firstLetter) => {
+  const result = await ((await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${firstLetter}`)).json());
+  return result.drinks;
+};
