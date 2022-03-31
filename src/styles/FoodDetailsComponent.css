@@ -12,3 +12,8 @@ ul {
 li {
   margin-right: 10px;
 }
+
+.start-recipe-button button {
+  bottom: 0;
+  position: fixed;
+}

@@ -150,14 +150,16 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
               })}
             </ul>
           </div>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => {} }
-          >
-            Iniciar Receita
-          </button>
+          <div className="start-recipe-button">
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ () => {} }
 
+            >
+              Start Recipe
+            </button>
+          </div>
         </div>
       )}
     </>

@@ -128,13 +128,15 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
               );
             })}
           </ul>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => {} }
-          >
-            Iniciar Receita
-          </button>
+          <div className="start-recipe--drink-button">
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              onClick={ () => {} }
+            >
+              Start Recipe
+            </button>
+          </div>
         </div>
       )}
     </>
