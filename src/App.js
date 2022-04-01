@@ -50,7 +50,7 @@ function App() {
             path="/explore/foods/nationalities"
             component={ ExploreFoodsByNationalities }
           />
-          <Route path="/*" render={ () => (<h1>not found</h1>) } />
+          <Route path="/*" render={ () => (<h1>Not Found</h1>) } />
         </Switch>
       </BrowserRouter>
     </MyProvider>

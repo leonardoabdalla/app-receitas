@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { fetchFoodById } from '../api/services';
-import '../styles/FoodsInProgressComponent.css';
+import { fetchDrinkById } from '../api/services';
+import '../styles/DrinkInProgressComponent.css';
 
 const CHECKBOX_CLASS = 'ingredient-step';
 
-const FoodDetailsComponent = ({ location: { pathname } }) => {
-  const [foodId, setFoodId] = useState('');
-  const [foodItem, setFoodItem] = useState({});
+const DrinkInProgressComponent = ({ location: { pathname } }) => {
+  const [drinkId, setDrinkId] = useState('');
+  const [drinkItem, setDrinkItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
 
   useEffect(() => {
     const getPath = pathname.split('/')[2];
-    setFoodId(getPath);
+    setDrinkId(getPath);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (foodId) {
-      const getFoodById = async () => {
-        const getFood = await fetchFoodById(foodId);
-        return setFoodItem(getFood[0]);
+    if (drinkId) {
+      const getDrinkById = async () => {
+        const getDrink = await fetchDrinkById(drinkId);
+        console.log('getDrink', getDrink);
+        return setDrinkItem(getDrink[0]);
       };
-      getFoodById();
+      getDrinkById();
     }
-  }, [foodId]);
+  }, [drinkId]);
 
   useEffect(() => {
-    const getEntries = Object.entries(foodItem);
+    const getEntries = Object.entries(drinkItem);
     const filterIngredEntries = getEntries
       .filter((entrie) => entrie[0].includes('strIngredient'));
 
@@ -47,7 +48,7 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
 
     const noEmptyQuantArr = quantArr.filter((quant) => quant && quant.trim());
     setQuantitiesArr(noEmptyQuantArr);
-  }, [foodItem]);
+  }, [drinkItem]);
 
   const handleStyle = (index) => {
     const getElemment = document.getElementById(`${index}-ingredient-step`);
@@ -62,23 +63,23 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
 
   return (
     <>
-      <h1>Food In Progress</h1>
-      {foodItem && (
+      <h1>Drink In Progress</h1>
+      {drinkItem && (
         <div>
           <h2
             data-testid="recipe-title"
           >
-            {foodItem.strMeal}
+            {drinkItem.strDrink}
           </h2>
           <h3
             data-testid="recipe-category"
           >
-            {foodItem.strCategory}
+            {drinkItem.strCategory}
           </h3>
           <img
             data-testid="recipe-photo"
-            src={ foodItem.strMealThumb }
-            alt={ `Meal: ${foodItem.strMeal}` }
+            src={ drinkItem.strDrinkThumb }
+            alt={ `Meal: ${drinkItem.strDrink}` }
             width="250px"
           />
           <div>
@@ -124,7 +125,7 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
           <p
             data-testid="instructions"
           >
-            {foodItem.strInstructions}
+            {drinkItem.strInstructions}
           </p>
           <button
             type="button"
@@ -140,10 +141,10 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
   );
 };
 
-FoodDetailsComponent.propTypes = {
+DrinkInProgressComponent.propTypes = {
   location: shape({
     pathname: string.isRequired,
   }).isRequired,
 };
 
-export default withRouter(FoodDetailsComponent);
+export default withRouter(DrinkInProgressComponent);
