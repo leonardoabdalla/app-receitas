@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { node } from 'prop-types';
 import MyContext from './MyContext';
-import { fetchFoods } from '../api/services';
+import { fetchFoods, fetchDrinks } from '../api/services';
 
 const MyProvider = ({ children }) => {
   const [email, setEmail] = useState('');
@@ -13,6 +13,7 @@ const MyProvider = ({ children }) => {
   const [filteredDrinks, setFilteredDrinks] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [foods, setFoods] = useState([]);
+  const [isDrinks, setDrinks] = useState([]);
 
   useEffect(() => {
     const fetchFoodsFunc = async () => {
@@ -20,6 +21,14 @@ const MyProvider = ({ children }) => {
       return setFoods(getFoods);
     };
     fetchFoodsFunc();
+  }, []);
+
+  useEffect(() => {
+    const fetchDrinksFunc = async () => {
+      const getFoods = await fetchDrinks();
+      return setDrinks(getFoods);
+    };
+    fetchDrinksFunc();
   }, []);
 
   const exploreFoodsByIngredients = (strIngredient) => {
@@ -33,10 +42,7 @@ const MyProvider = ({ children }) => {
   const exploreDrinksByIngredients = (strIngredient1) => {
     const fetchDrinksByIngredient = async () => {
       const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${strIngredient1}`).then((response) => response.json());
-      setFilteredDrinks(drinks);
-      setIsFiltered(true);
-
-      console.log('xablau', drinks);
+      setDrinks(drinks);
     };
     fetchDrinksByIngredient();
   };
@@ -50,6 +56,7 @@ const MyProvider = ({ children }) => {
     setFilter,
     foodCategoryFilter,
     foods,
+    isDrinks,
     setFoods,
     updateFoodCategoryFilter: (category) => setFoodCategoryFilter(category),
     drinkCategoryFilter,
