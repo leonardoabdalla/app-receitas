@@ -3,6 +3,9 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchDrinkById, fetchFoods } from '../api/services';
 import '../styles/DrinkDetailsComponent .css';
+import ShareButton from './ShareButton';
+import FavoriteDrinkButton from './FavoriteDrinkButton';
+import StartDrinkButton from './StartDrinkButton';
 
 const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   const [drinkItem, setDrinkItem] = useState([{}]);
@@ -24,6 +27,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
       return setRecommendedFoods(getFoods);
     };
     getRecommended();
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -67,20 +71,8 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
             width="250px"
           />
           <div>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => {} }
-            >
-              Compartilhar
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-              onClick={ () => {} }
-            >
-              Favoritar
-            </button>
+            <ShareButton pathname={ pathname } />
+            <FavoriteDrinkButton drinkId={ pathname.split('/')[2] } />
           </div>
           <div>
             <h3>Ingredientes</h3>
@@ -128,13 +120,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
               );
             })}
           </ul>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => {} }
-          >
-            Iniciar Receita
-          </button>
+          <StartDrinkButton drinkId={ pathname.split('/')[2] } />
         </div>
       )}
     </>
