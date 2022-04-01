@@ -4,14 +4,15 @@ import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
-const ShareButton = ({ pathname }) => {
+const ShareButton = ({ pathname, testId }) => {
   const [isCopied, setIsCopied] = useState(false);
 
   return (
     <button
       type="button"
-      data-testid="share-btn"
+      data-testid={ testId }
       onClick={ () => { copy(`http://localhost:3000${pathname}`); setIsCopied(true); } }
+      src={ shareIcon }
     >
       { !isCopied ? (
         <img
@@ -25,6 +26,7 @@ const ShareButton = ({ pathname }) => {
 
 ShareButton.propTypes = {
   pathname: string.isRequired,
+  testId: string.isRequired,
 };
 
 export default ShareButton;

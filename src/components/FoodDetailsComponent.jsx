@@ -80,7 +80,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
           width="250px"
         />
         <div>
-          <ShareButton pathname={ pathname } />
+          <ShareButton pathname={ pathname } testId="share-btn" />
           <FavoriteButton foodId={ pathname.split('/')[2] } />
         </div>
         <div>

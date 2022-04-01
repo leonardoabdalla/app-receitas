@@ -1,0 +1,9 @@
+.done-recipes-card {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  justify-content: space-around;
+  width: 80%;
+}
+
