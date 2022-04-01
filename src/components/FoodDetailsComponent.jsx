@@ -3,9 +3,9 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchFoodById, fetchDrinks } from '../api/services';
 import '../styles/FoodDetailsComponent.css';
-import shareIcon from '../images/shareIcon.svg';
-
-const copy = require('clipboard-copy');
+import ShareButton from './ShareButton';
+import FavoriteButton from './FavoriteButton';
+import StartContinueButton from './StartContinueButton';
 
 const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [foodId, setFoodId] = useState('');
@@ -13,9 +13,8 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
   const [recomendedDrinks, setRecomendedDrinks] = useState([{}]);
-  const [showButton, setShowButton] = useState(true);
-  const [buttonText, setButtonText] = useState('Start Recipe');
-  const [isCopied, setIsCopied] = useState(false);
+
+  const SHOW_RECOMMENDED = 6;
 
   useEffect(() => {
     const getPathId = pathname.split('/')[2];
@@ -25,15 +24,6 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
       return setRecomendedDrinks(getDrinks);
     };
     getRecomendedDrinks();
-
-    const getLocalStorageDone = JSON.parse(localStorage.getItem('doneRecipes'));
-    getLocalStorageDone?.forEach((recipe) => {
-      if (recipe.id === getPathId) return setShowButton(false);
-    });
-
-    const getLocalStorageProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (getLocalStorageProgress && Object.keys(getLocalStorageProgress?.meals)
-      .includes(getPathId)) setButtonText('Continue Recipe');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -90,25 +80,8 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
           width="250px"
         />
         <div>
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ () => { copy(`http://localhost:3000${pathname}`); setIsCopied(true); } }
-          >
-            { !isCopied ? (
-              <img
-                src={ shareIcon }
-                alt="Botão de compartilhar"
-              />
-            ) : <span>Link copied!</span>}
-          </button>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-            onClick={ () => {} }
-          >
-            Favoritar
-          </button>
+          <ShareButton pathname={ pathname } />
+          <FavoriteButton foodId={ pathname.split('/')[2] } />
         </div>
         <div>
           <h3>Ingredientes</h3>
@@ -134,52 +107,35 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
           title={ foodItem.strMeal }
           width="300px"
           height="200px"
-          src={ foodItem.strYoutube && foodItem.strYoutube.replace('watch', 'embed') }
+          src={ foodItem.strYoutube?.replace('watch', 'embed') }
         />
-        <div className="recommended-box">
-          <ul>
-            {recomendedDrinks.map((drink, index) => {
-              const SHOW_RECOMMENDED = 5;
-              if (index > SHOW_RECOMMENDED) return null;
-              return (
-                <li
-                  className="recommended-card"
-                  data-testid={ `${index}-recomendation-card` }
-                  key={ index }
+        <ul>
+          {recomendedDrinks.slice(0, SHOW_RECOMMENDED).map((drink, index) => (
+            <li
+              className="recommended-card"
+              data-testid={ `${index}-recomendation-card` }
+              key={ index }
+            >
+              <button
+                onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
+                type="button"
+              >
+                <img
+                  src={ drink.strDrinkThumb }
+                  alt={ drink.strDrink }
+                  width="100px"
+                />
+                <h3
+                  data-testid={ `${index}-recomendation-title` }
                 >
-                  <div
-                    onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
-                    onKeyDown={ () => history.push(`/drinks/${drink.idDrink}`) }
-                    role="button"
-                    tabIndex={ index }
-                  >
-                    <img
-                      src={ drink.strDrinkThumb }
-                      alt={ drink.strDrink }
-                      width="100px"
-                    />
-                    <h3
-                      data-testid={ `${index}-recomendation-title` }
-                    >
-                      { drink.strDrink }
+                  { drink.strDrink }
 
-                    </h3>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        { showButton && (
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => history.push(`/foods/${foodId}/in-progress`) }
-            className="start-recipe-button"
-          >
-            {buttonText}
-          </button>
-        )}
+                </h3>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <StartContinueButton foodId={ pathname.split('/')[2] } />
       </div>
     </>
   );
