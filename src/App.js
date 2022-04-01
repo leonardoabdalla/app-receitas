@@ -28,25 +28,28 @@ function App() {
           <Route exact path="/" render={ (props) => <Login { ...props } /> } />
           <Route exact path="/foods" render={ Foods } />
           <Route exact path="/foods/:id" render={ FoodDetails } />
-          <Route path="/foods/:id/in-progress" render={ FoodInProgress } />
+          <Route exact path="/foods/:id/in-progress" render={ FoodInProgress } />
           <Route exact path="/drinks" render={ Drinks } />
           <Route exact path="/drinks/:id" render={ DrinksDetails } />
-          <Route path="/drinks/:id/in-progress" render={ DrinksInProgress } />
+          <Route exact path="/drinks/:id/in-progress" render={ DrinksInProgress } />
           <Route exact path="/explore" component={ Explore } />
-          <Route path="/explore/drinks" component={ ExploreDrinks } />
-          <Route path="/explore/foods" component={ ExploreFoods } />
-          <Route path="/profile" render={ Profile } />
-          <Route path="/done-recipes" render={ DoneRecipes } />
-          <Route path="/favorite-recipes" render={ FavoriteRecipes } />
+          <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+          <Route exact path="/explore/foods" component={ ExploreFoods } />
+          <Route exact path="/profile" render={ Profile } />
+          <Route exact path="/done-recipes" render={ DoneRecipes } />
+          <Route exact path="/favorite-recipes" render={ FavoriteRecipes } />
           <Route
+            exact
             path="/explore/foods/ingredients"
             component={ ExploreFoodsByIngredients }
           />
           <Route
+            exact
             path="/explore/drinks/ingredients"
             component={ ExploreDrinksByIngredients }
           />
           <Route
+            exact
             path="/explore/foods/nationalities"
             component={ ExploreFoodsByNationalities }
           />
