@@ -10,12 +10,9 @@ const StartDrinkButton = ({ drinkId }) => {
   useEffect(() => {
     const getLocalStorageDone = JSON.parse(localStorage.getItem('doneRecipes'));
 
-    console.log('oi', drinkId);
     if (getLocalStorageDone) {
       getLocalStorageDone.forEach((recipe) => {
-        console.log('recipe.id', recipe.id);
         if (recipe.id === drinkId) {
-          console.log('oi2', drinkId);
           return setShowButton(false);
         }
       });
