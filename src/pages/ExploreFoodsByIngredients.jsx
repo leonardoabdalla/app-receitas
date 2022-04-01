@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
+import MyContext from '../context/MyContext';
 
 function ExploreFoodsByIngredients({ history }) {
+  const { exploreFoodsByIngredients } = useContext(MyContext);
   const apiIngredients = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
   const [ingredients, setIngredients] = useState([]);
   useEffect(() => {
@@ -14,28 +16,33 @@ function ExploreFoodsByIngredients({ history }) {
     };
     fetchIngredientsFood();
   }, []);
+
+  const redirectAndFilter = (strIngredient) => {
+    exploreFoodsByIngredients(strIngredient);
+    history.push('/foods');
+  };
+  const maxVisibleIng = 12;
   return (
     <>
       <Header />
       <div>
         {
-          ingredients.map((ingredient, index) => (
-            // if(index > 12) return null
+          ingredients.slice(0, maxVisibleIng).map((ingredient, index) => (
             <div
               Key={ index }
               data-testid={ `${index}-ingredient-card` }
-              onClick={ () => history.push('/foods') }
-              onKeyDown={ () => history.push('/foods/') }
+              onClick={ () => redirectAndFilter(ingredient.strIngredient) }
+              onKeyDown={ () => history.push('/foods') }
               role="button"
               tabIndex={ index }
             >
               <p
-                data-testid={ `${ingredient.strIngredient}-card-name` }
+                data-testid={ `${index}-card-name` }
               >
                 { ingredient.strIngredient }
               </p>
               <img
-                data-testid={ `${`https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`}-card-img` }
+                data-testid={ `${index}-card-img` }
                 src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
                 alt={ ingredient.strIngredient }
               />

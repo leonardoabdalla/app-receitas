@@ -17,13 +17,17 @@ const DrinksCard = ({ history }) => {
     fetchDrinksFunc();
   }, []);
 
-  useEffect(() => (
-    isFiltered ? setArrayToRender(filteredDrinks) : setArrayToRender(drinks)),
+  useEffect(() => {
+    if (isFiltered) setArrayToRender(filteredDrinks);
+    else setArrayToRender(drinks);
+    console.log(isFiltered);
+  },
   [filteredDrinks, isFiltered, drinks]);
 
   return (
     <>
       <h2>Render Drinks</h2>
+      { console.log('componente drinksCard', arrayToRender)}
       {arrayToRender && arrayToRender.map((drink, index) => {
         const SHOW_ITEMS = 11;
         if (index > SHOW_ITEMS) return null;

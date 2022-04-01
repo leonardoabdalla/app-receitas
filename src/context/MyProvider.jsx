@@ -22,6 +22,25 @@ const MyProvider = ({ children }) => {
     fetchFoodsFunc();
   }, []);
 
+  const exploreFoodsByIngredients = (strIngredient) => {
+    const fetchFoodByIngredient = async () => {
+      const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${strIngredient}`).then((response) => response.json());
+      setFoods(meals);
+    };
+    fetchFoodByIngredient();
+  };
+
+  const exploreDrinksByIngredients = (strIngredient1) => {
+    const fetchDrinksByIngredient = async () => {
+      const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${strIngredient1}`).then((response) => response.json());
+      setFilteredDrinks(drinks);
+      setIsFiltered(true);
+
+      console.log('xablau', drinks);
+    };
+    fetchDrinksByIngredient();
+  };
+
   const contextValue = {
     email,
     updateEmail: (value) => setEmail(value),
@@ -41,6 +60,8 @@ const MyProvider = ({ children }) => {
     updateFilteredDrinks: (drinks) => setFilteredDrinks(drinks),
     isFiltered,
     updateIsFiltered: (value) => setIsFiltered(value),
+    exploreFoodsByIngredients,
+    exploreDrinksByIngredients,
   };
 
   return (
