@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { string } from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-const StartContinueButton = ({ foodId }) => {
+const StartDrinkButton = ({ drinkId }) => {
   const [showButton, setShowButton] = useState(true);
   const [buttonText, setButtonText] = useState('Start Recipe');
   const history = useHistory();
@@ -10,12 +10,12 @@ const StartContinueButton = ({ foodId }) => {
   useEffect(() => {
     const getLocalStorageDone = JSON.parse(localStorage.getItem('doneRecipes'));
 
-    console.log('oi', foodId);
+    console.log('oi', drinkId);
     if (getLocalStorageDone) {
       getLocalStorageDone.forEach((recipe) => {
         console.log('recipe.id', recipe.id);
-        if (recipe.id === foodId) {
-          console.log('oi2', foodId);
+        if (recipe.id === drinkId) {
+          console.log('oi2', drinkId);
           return setShowButton(false);
         }
       });
@@ -23,8 +23,8 @@ const StartContinueButton = ({ foodId }) => {
 
     const getLocalStorageProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
-    if (getLocalStorageProgress && Object.keys(getLocalStorageProgress?.meals)
-      .includes(foodId)) setButtonText('Continue Recipe');
+    if (getLocalStorageProgress && Object.keys(getLocalStorageProgress?.cocktails)
+      .includes(drinkId)) setButtonText('Continue Recipe');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -35,7 +35,7 @@ const StartContinueButton = ({ foodId }) => {
         <button
           type="button"
           data-testid="start-recipe-btn"
-          onClick={ () => history.push(`/foods/${foodId}/in-progress`) }
+          onClick={ () => history.push(`/drinks/${drinkId}/in-progress`) }
           className="start-recipe-button"
         >
           {buttonText}
@@ -45,8 +45,8 @@ const StartContinueButton = ({ foodId }) => {
   );
 };
 
-StartContinueButton.propTypes = {
-  foodId: string.isRequired,
+StartDrinkButton.propTypes = {
+  drinkId: string.isRequired,
 };
 
-export default StartContinueButton;
+export default StartDrinkButton;
