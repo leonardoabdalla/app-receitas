@@ -13,12 +13,9 @@ const MyProvider = ({ children }) => {
   const [filteredDrinks, setFilteredDrinks] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [foods, setFoods] = useState([]);
-<<<<<<< HEAD
   const [favoriteDrink, setFavoriteDrinks] = useState([]);
   const [favoriteFoods, setFavoriteFoods] = useState({});
-=======
   const [isDrinks, setDrinks] = useState([]);
->>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
 
   useEffect(() => {
     const fetchFoodsFunc = async () => {

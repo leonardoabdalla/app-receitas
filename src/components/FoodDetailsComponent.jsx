@@ -3,13 +3,9 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchFoodById, fetchDrinks } from '../api/services';
 import '../styles/FoodDetailsComponent.css';
-<<<<<<< HEAD
-// import MyContext from '../context/MyContext';
-=======
 import ShareButton from './ShareButton';
 import FavoriteButton from './FavoriteButton';
 import StartContinueButton from './StartContinueButton';
->>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
 
 const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [foodId, setFoodId] = useState('');
@@ -63,30 +59,6 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
     setQuantitiesArr(noEmptyQuantArr);
   }, [foodItem]);
 
-  const makingObjFav = (food) => {
-    const objFood = {
-      id: food.idMeal,
-      type: 'food',
-      nationality: food.strArea,
-      category: food.strCategory,
-      alcoholicOrNot: '',
-      name: food.strMeal,
-      image: food.strMealThumb,
-    };
-    if (localStorage.getItem('favoriteRecipes') === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([objFood]));
-    } else {
-      localStorage.setItem(
-        'favoriteRecipes',
-        // O JSON.parse transforma a string em JSON novamente, o inverso do JSON.strigify
-        JSON.stringify([
-          ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-          objFood,
-        ]),
-      );
-    }
-  };
-
   return (
     <>
       <h1>Food Details</h1>
@@ -108,36 +80,6 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
           width="250px"
         />
         <div>
-<<<<<<< HEAD
-          <h2
-            data-testid="recipe-title"
-          >
-            {foodItem.strMeal}
-          </h2>
-          <h3
-            data-testid="recipe-category"
-          >
-            {foodItem.strCategory}
-          </h3>
-          <img
-            data-testid="recipe-photo"
-            src={ foodItem.strMealThumb }
-            alt={ `Meal: ${foodItem.strMeal}` }
-            width="250px"
-          />
-          <div>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => {} }
-            >
-              Compartilhar
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-              onClick={ () => makingObjFav(foodItem) }
-=======
           <ShareButton pathname={ pathname } testId="share-btn" />
           <FavoriteButton foodId={ pathname.split('/')[2] } />
         </div>
@@ -173,7 +115,6 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
               className="recommended-card"
               data-testid={ `${index}-recomendation-card` }
               key={ index }
->>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
             >
               <button
                 onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
