@@ -71,7 +71,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
             width="250px"
           />
           <div>
-            <ShareButton pathname={ pathname } />
+            <ShareButton pathname={ pathname } testId="share-btn" />
             <FavoriteDrinkButton drinkId={ pathname.split('/')[2] } />
           </div>
           <div>

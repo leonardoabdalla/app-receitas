@@ -16,7 +16,7 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreFoodsByIngredients from './pages/ExploreFoodsByIngredients';
 import ExploreDrinksByIngredients from './pages/ExploreDrinksByIngredients';
 import ExploreFoodsByNationalities from './pages/ExploreFoodsByNationalities';
-import FoodInProgress from './pages/FoodInProgress';
+import FoodsInProgress from './pages/FoodsInProgress';
 import DrinksInProgress from './pages/DrinksInProgress';
 import Foods from './pages/Foods';
 
@@ -28,7 +28,7 @@ function App() {
           <Route exact path="/" render={ (props) => <Login { ...props } /> } />
           <Route exact path="/foods" render={ Foods } />
           <Route exact path="/foods/:id" render={ FoodDetails } />
-          <Route exact path="/foods/:id/in-progress" render={ FoodInProgress } />
+          <Route path="/foods/:id/in-progress" render={ FoodsInProgress } />
           <Route exact path="/drinks" render={ Drinks } />
           <Route exact path="/drinks/:id" render={ DrinksDetails } />
           <Route exact path="/drinks/:id/in-progress" render={ DrinksInProgress } />
@@ -53,7 +53,7 @@ function App() {
             path="/explore/foods/nationalities"
             component={ ExploreFoodsByNationalities }
           />
-          <Route path="/*" render={ () => (<h1>not found</h1>) } />
+          <Route path="/*" render={ () => (<h1>Not Found</h1>) } />
         </Switch>
       </BrowserRouter>
     </MyProvider>
