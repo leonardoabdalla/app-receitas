@@ -3,7 +3,6 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchDrinkById, fetchFoods } from '../api/services';
 import '../styles/DrinkDetailsComponent .css';
-// import MyContext from '../context/MyContext';
 import ShareButton from './ShareButton';
 import FavoriteDrinkButton from './FavoriteDrinkButton';
 import StartDrinkButton from './StartDrinkButton';
@@ -50,30 +49,6 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
     setQuantitiesArray(noEmptyQuant);
   }, [drinkItem]);
 
-  const makingObjFav = (drink) => {
-    const objFood = {
-      id: drink.idDrink,
-      type: 'drink',
-      nationality: drink.nacionalitie,
-      category: drink.strCategory,
-      alcoholicOrNot: drink.strAlcoholic,
-      name: drink.strDrink,
-      image: drink.strDrinkThumb,
-    };
-    if (localStorage.getItem('favoriteRecipes') === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([objFood]));
-    } else {
-      localStorage.setItem(
-        'favoriteRecipes',
-        // O JSON.parse transforma a string em JSON novamente, o inverso do JSON.strigify
-        JSON.stringify([
-          ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-          objFood,
-        ]),
-      );
-    }
-  };
-
   return (
     <>
       <h1>Drink Details</h1>
@@ -96,20 +71,6 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
             width="250px"
           />
           <div>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => {} }
-            >
-              Compartilhar
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-              onClick={ () => makingObjFav(drinkItem) }
-            >
-              Favoritar
-            </button>
             <ShareButton pathname={ pathname } testId="share-btn" />
             <FavoriteDrinkButton drinkId={ pathname.split('/')[2] } />
           </div>
