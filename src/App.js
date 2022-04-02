@@ -16,7 +16,7 @@ import ExploreDrinks from './pages/ExploreDrinks';
 import ExploreFoodsByIngredients from './pages/ExploreFoodsByIngredients';
 import ExploreDrinksByIngredients from './pages/ExploreDrinksByIngredients';
 import ExploreFoodsByNationalities from './pages/ExploreFoodsByNationalities';
-import FoodInProgress from './pages/FoodInProgress';
+import FoodsInProgress from './pages/FoodsInProgress';
 import DrinksInProgress from './pages/DrinksInProgress';
 import Foods from './pages/Foods';
 
@@ -28,29 +28,40 @@ function App() {
           <Route exact path="/" render={ (props) => <Login { ...props } /> } />
           <Route exact path="/foods" render={ Foods } />
           <Route exact path="/foods/:id" render={ FoodDetails } />
-          <Route path="/foods/:id/in-progress" render={ FoodInProgress } />
+          <Route path="/foods/:id/in-progress" render={ FoodsInProgress } />
           <Route exact path="/drinks" render={ Drinks } />
           <Route exact path="/drinks/:id" render={ DrinksDetails } />
-          <Route path="/drinks/:id/in-progress" render={ DrinksInProgress } />
+          <Route exact path="/drinks/:id/in-progress" render={ DrinksInProgress } />
           <Route exact path="/explore" component={ Explore } />
+<<<<<<< HEAD
           <Route path="/explore/drinks" component={ ExploreDrinks } />
           <Route path="/explore/foods" component={ ExploreFoods } />
           <Route path="/profile" render={ Profile } />
           <Route path="/done-recipes" render={ DoneRecipes } />
           <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
+=======
+          <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+          <Route exact path="/explore/foods" component={ ExploreFoods } />
+          <Route exact path="/profile" render={ Profile } />
+          <Route exact path="/done-recipes" render={ DoneRecipes } />
+          <Route exact path="/favorite-recipes" render={ FavoriteRecipes } />
+>>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
           <Route
+            exact
             path="/explore/foods/ingredients"
             component={ ExploreFoodsByIngredients }
           />
           <Route
+            exact
             path="/explore/drinks/ingredients"
             component={ ExploreDrinksByIngredients }
           />
           <Route
+            exact
             path="/explore/foods/nationalities"
             component={ ExploreFoodsByNationalities }
           />
-          <Route path="/*" render={ () => (<h1>not found</h1>) } />
+          <Route path="/*" render={ () => (<h1>Not Found</h1>) } />
         </Switch>
       </BrowserRouter>
     </MyProvider>

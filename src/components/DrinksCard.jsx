@@ -1,25 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { fetchDrinks } from '../api/services';
 import MyContext from '../context/MyContext';
 
 const DrinksCard = ({ history }) => {
-  const [drinks, setDrinks] = useState([]);
   const [arrayToRender, setArrayToRender] = useState([]);
-  const { filteredDrinks, isFiltered } = useContext(MyContext);
-
-  useEffect(() => {
-    const fetchDrinksFunc = async () => {
-      const getDrinks = await fetchDrinks();
-      return setDrinks(getDrinks);
-    };
-    fetchDrinksFunc();
-  }, []);
+  const { filteredDrinks, isFiltered, isDrinks } = useContext(MyContext);
 
   useEffect(() => (
-    isFiltered ? setArrayToRender(filteredDrinks) : setArrayToRender(drinks)),
-  [filteredDrinks, isFiltered, drinks]);
+    isFiltered ? setArrayToRender(filteredDrinks) : setArrayToRender(isDrinks)),
+  [isFiltered, filteredDrinks, isDrinks]);
 
   return (
     <>

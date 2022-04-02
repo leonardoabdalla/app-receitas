@@ -3,7 +3,13 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchDrinkById, fetchFoods } from '../api/services';
 import '../styles/DrinkDetailsComponent .css';
+<<<<<<< HEAD
 // import MyContext from '../context/MyContext';
+=======
+import ShareButton from './ShareButton';
+import FavoriteDrinkButton from './FavoriteDrinkButton';
+import StartDrinkButton from './StartDrinkButton';
+>>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
 
 const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   const [drinkItem, setDrinkItem] = useState([{}]);
@@ -25,6 +31,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
       return setRecommendedFoods(getFoods);
     };
     getRecommended();
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -92,6 +99,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
             width="250px"
           />
           <div>
+<<<<<<< HEAD
             <button
               type="button"
               data-testid="share-btn"
@@ -106,6 +114,10 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
             >
               Favoritar
             </button>
+=======
+            <ShareButton pathname={ pathname } testId="share-btn" />
+            <FavoriteDrinkButton drinkId={ pathname.split('/')[2] } />
+>>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
           </div>
           <div>
             <h3>Ingredientes</h3>
@@ -153,13 +165,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
               );
             })}
           </ul>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => {} }
-          >
-            Iniciar Receita
-          </button>
+          <StartDrinkButton drinkId={ pathname.split('/')[2] } />
         </div>
       )}
     </>

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import FavoriteFoods from '../components/FavoriteFoods';
 import { withRouter } from 'react-router-dom';
 import { shape, func } from 'prop-types';
 import Header from '../components/Header';
-// import MyContext from '../context/MyContext';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 

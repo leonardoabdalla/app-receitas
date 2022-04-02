@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { node } from 'prop-types';
 import MyContext from './MyContext';
-import { fetchFoods } from '../api/services';
+import { fetchFoods, fetchDrinks } from '../api/services';
 
 const MyProvider = ({ children }) => {
   const [email, setEmail] = useState('');
@@ -13,8 +13,12 @@ const MyProvider = ({ children }) => {
   const [filteredDrinks, setFilteredDrinks] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [foods, setFoods] = useState([]);
+<<<<<<< HEAD
   const [favoriteDrink, setFavoriteDrinks] = useState([]);
   const [favoriteFoods, setFavoriteFoods] = useState({});
+=======
+  const [isDrinks, setDrinks] = useState([]);
+>>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
 
   useEffect(() => {
     const fetchFoodsFunc = async () => {
@@ -23,6 +27,30 @@ const MyProvider = ({ children }) => {
     };
     fetchFoodsFunc();
   }, []);
+
+  useEffect(() => {
+    const fetchDrinksFunc = async () => {
+      const getFoods = await fetchDrinks();
+      return setDrinks(getFoods);
+    };
+    fetchDrinksFunc();
+  }, []);
+
+  const exploreFoodsByIngredients = (strIngredient) => {
+    const fetchFoodByIngredient = async () => {
+      const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${strIngredient}`).then((response) => response.json());
+      setFoods(meals);
+    };
+    fetchFoodByIngredient();
+  };
+
+  const exploreDrinksByIngredients = (strIngredient1) => {
+    const fetchDrinksByIngredient = async () => {
+      const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${strIngredient1}`).then((response) => response.json());
+      setDrinks(drinks);
+    };
+    fetchDrinksByIngredient();
+  };
 
   const contextValue = {
     email,
@@ -37,6 +65,7 @@ const MyProvider = ({ children }) => {
     setFilter,
     foodCategoryFilter,
     foods,
+    isDrinks,
     setFoods,
     updateFoodCategoryFilter: (category) => setFoodCategoryFilter(category),
     drinkCategoryFilter,
@@ -47,6 +76,8 @@ const MyProvider = ({ children }) => {
     updateFilteredDrinks: (drinks) => setFilteredDrinks(drinks),
     isFiltered,
     updateIsFiltered: (value) => setIsFiltered(value),
+    exploreFoodsByIngredients,
+    exploreDrinksByIngredients,
   };
 
   return (

@@ -3,7 +3,13 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchFoodById, fetchDrinks } from '../api/services';
 import '../styles/FoodDetailsComponent.css';
+<<<<<<< HEAD
 // import MyContext from '../context/MyContext';
+=======
+import ShareButton from './ShareButton';
+import FavoriteButton from './FavoriteButton';
+import StartContinueButton from './StartContinueButton';
+>>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
 
 const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [foodId, setFoodId] = useState('');
@@ -12,14 +18,17 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [quantitiesArr, setQuantitiesArr] = useState([]);
   const [recomendedDrinks, setRecomendedDrinks] = useState([{}]);
 
+  const SHOW_RECOMMENDED = 6;
+
   useEffect(() => {
-    const getPath = pathname.split('/')[2];
-    setFoodId(getPath);
+    const getPathId = pathname.split('/')[2];
+    setFoodId(getPathId);
     const getRecomendedDrinks = async () => {
       const getDrinks = await fetchDrinks();
       return setRecomendedDrinks(getDrinks);
     };
     getRecomendedDrinks();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -81,8 +90,25 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   return (
     <>
       <h1>Food Details</h1>
-      { foodItem && (
+      <div>
+        <h2
+          data-testid="recipe-title"
+        >
+          {foodItem.strMeal}
+        </h2>
+        <h3
+          data-testid="recipe-category"
+        >
+          {foodItem.strCategory}
+        </h3>
+        <img
+          data-testid="recipe-photo"
+          src={ foodItem.strMealThumb }
+          alt={ `Meal: ${foodItem.strMeal}` }
+          width="250px"
+        />
         <div>
+<<<<<<< HEAD
           <h2
             data-testid="recipe-title"
           >
@@ -111,80 +137,65 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
               type="button"
               data-testid="favorite-btn"
               onClick={ () => makingObjFav(foodItem) }
-            >
-              Favoritar
-            </button>
-          </div>
-          <div>
-            <h3>Ingredientes</h3>
-            {
-              ingredientsArray
-                .map((ingredient, index) => (
-                  <p
-                    key={ index }
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                  >
-                    {`${ingredient}: ${quantitiesArr[index]}`}
-                  </p>
-                ))
-            }
-          </div>
-          <p
-            data-testid="instructions"
-          >
-            {foodItem.strInstructions}
-          </p>
-          <iframe
-            data-testid="video"
-            title={ foodItem.strMeal }
-            width="300px"
-            height="200px"
-            src={ foodItem.strYoutube && foodItem.strYoutube.replace('watch', 'embed') }
-          />
-          <div className="recommended-box">
-            <ul>
-              {recomendedDrinks && recomendedDrinks.map((drink, index) => {
-                const SHOW_RECOMMENDED = 5;
-                if (index > SHOW_RECOMMENDED) return null;
-                return (
-                  <li
-                    className="recommended-card"
-                    data-testid={ `${index}-recomendation-card` }
-                    key={ index }
-                  >
-                    <div
-                      onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
-                      onKeyDown={ () => history.push(`/drinks/${drink.idDrink}`) }
-                      role="button"
-                      tabIndex={ index }
-                    >
-                      <img
-                        src={ drink.strDrinkThumb }
-                        alt={ drink.strDrink }
-                        width="100px"
-                      />
-                      <h3
-                        data-testid={ `${index}-recomendation-title` }
-                      >
-                        { drink.strDrink }
-
-                      </h3>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => {} }
-          >
-            Iniciar Receita
-          </button>
-
+=======
+          <ShareButton pathname={ pathname } testId="share-btn" />
+          <FavoriteButton foodId={ pathname.split('/')[2] } />
         </div>
-      )}
+        <div>
+          <h3>Ingredientes</h3>
+          {
+            ingredientsArray
+              .map((ingredient, index) => (
+                <p
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${ingredient}: ${quantitiesArr[index]}`}
+                </p>
+              ))
+          }
+        </div>
+        <p
+          data-testid="instructions"
+        >
+          {foodItem.strInstructions}
+        </p>
+        <iframe
+          data-testid="video"
+          title={ foodItem.strMeal }
+          width="300px"
+          height="200px"
+          src={ foodItem.strYoutube?.replace('watch', 'embed') }
+        />
+        <ul>
+          {recomendedDrinks.slice(0, SHOW_RECOMMENDED).map((drink, index) => (
+            <li
+              className="recommended-card"
+              data-testid={ `${index}-recomendation-card` }
+              key={ index }
+>>>>>>> ba3b860d6ccd981cfa0d2f3e99f42b5c76452676
+            >
+              <button
+                onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
+                type="button"
+              >
+                <img
+                  src={ drink.strDrinkThumb }
+                  alt={ drink.strDrink }
+                  width="100px"
+                />
+                <h3
+                  data-testid={ `${index}-recomendation-title` }
+                >
+                  { drink.strDrink }
+
+                </h3>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <StartContinueButton foodId={ pathname.split('/')[2] } />
+      </div>
     </>
   );
 };
