@@ -3,6 +3,7 @@ import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchDrinkById, fetchFoods } from '../api/services';
 import '../styles/DrinkDetailsComponent .css';
+// import MyContext from '../context/MyContext';
 
 const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   const [drinkItem, setDrinkItem] = useState([{}]);
@@ -45,6 +46,30 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
     setQuantitiesArray(noEmptyQuant);
   }, [drinkItem]);
 
+  const makingObjFav = (drink) => {
+    const objFood = {
+      id: drink.idDrink,
+      type: 'drink',
+      nationality: drink.nacionalitie,
+      category: drink.strCategory,
+      alcoholicOrNot: drink.strAlcoholic,
+      name: drink.strDrink,
+      image: drink.strDrinkThumb,
+    };
+    if (localStorage.getItem('favoriteRecipes') === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([objFood]));
+    } else {
+      localStorage.setItem(
+        'favoriteRecipes',
+        // O JSON.parse transforma a string em JSON novamente, o inverso do JSON.strigify
+        JSON.stringify([
+          ...JSON.parse(localStorage.getItem('favoriteRecipes')),
+          objFood,
+        ]),
+      );
+    }
+  };
+
   return (
     <>
       <h1>Drink Details</h1>
@@ -77,7 +102,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
             <button
               type="button"
               data-testid="favorite-btn"
-              onClick={ () => {} }
+              onClick={ () => makingObjFav(drinkItem) }
             >
               Favoritar
             </button>

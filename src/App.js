@@ -37,7 +37,7 @@ function App() {
           <Route path="/explore/foods" component={ ExploreFoods } />
           <Route path="/profile" render={ Profile } />
           <Route path="/done-recipes" render={ DoneRecipes } />
-          <Route path="/favorite-recipes" render={ FavoriteRecipes } />
+          <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
           <Route
             path="/explore/foods/ingredients"
             component={ ExploreFoodsByIngredients }
