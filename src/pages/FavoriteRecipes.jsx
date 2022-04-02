@@ -4,7 +4,7 @@ import { shape, func } from 'prop-types';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-
+// Faz a copia
 const copy = require('clipboard-copy');
 
 function FavoriteRecipes({ history }) {
