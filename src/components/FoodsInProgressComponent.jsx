@@ -11,22 +11,31 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
   const [foodItem, setFoodItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
+  const [localSaved, setLocalSaved] = useState([]);
 
   useEffect(() => {
     const getPath = pathname.split('/')[2];
     setFoodId(getPath);
+
+    const getFoodById = async () => {
+      const getFood = await fetchFoodById(getPath);
+      return setFoodItem(getFood[0]);
+    };
+    getFoodById();
+
+    const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setLocalSaved(getLocalSaved);
+
+    if (!getLocalSaved) {
+      setLocalSaved({
+        meals: {
+          [getPath]: [],
+        },
+      });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (foodId) {
-      const getFoodById = async () => {
-        const getFood = await fetchFoodById(foodId);
-        return setFoodItem(getFood[0]);
-      };
-      getFoodById();
-    }
-  }, [foodId]);
 
   useEffect(() => {
     const getEntries = Object.entries(foodItem);
@@ -47,17 +56,63 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
 
     const noEmptyQuantArr = quantArr.filter((quant) => quant && quant.trim());
     setQuantitiesArr(noEmptyQuantArr);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [foodItem]);
 
-  const handleStyle = (index) => {
-    const getElemment = document.getElementById(`${index}-ingredient-step`);
-    console.log('antes getElemment', getElemment.className);
-    if (getElemment.className === CHECKBOX_CLASS) {
-      getElemment.className = 'checked-ingredient-step';
-      return console.log('dentro getElemment', getElemment.className);
+  const handleLocalSave = (ingredient) => {
+    const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (getLocalSaved?.meals[foodId].includes(ingredient)) {
+      const filteredArr = getLocalSaved.meals[foodId]
+        .filter((item) => item !== ingredient);
+
+      setLocalSaved({
+        ...getLocalSaved,
+        meals: {
+          [foodId]: [...filteredArr],
+        },
+      });
+
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...getLocalSaved,
+        meals: {
+          [foodId]: [...filteredArr],
+        },
+      }));
     }
-    getElemment.className = CHECKBOX_CLASS;
-    return console.log('dentro getElemment', getElemment.className);
+    if (getLocalSaved) {
+      setLocalSaved({
+        ...getLocalSaved,
+        meals: {
+          [foodId]: [...getLocalSaved.meals[foodId], ingredient],
+        },
+      });
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...getLocalSaved,
+        meals: {
+          [foodId]: [...getLocalSaved.meals[foodId], ingredient],
+        },
+      }));
+    }
+
+    setLocalSaved({
+      meals: {
+        [foodId]: [ingredient],
+      },
+    });
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      meals: {
+        [foodId]: [ingredient],
+      },
+    }));
+  };
+
+  const handleStyle = (ingredient) => {
+    if (localSaved.meals[foodId].includes(ingredient)) {
+      return { textDecoration: 'line-through' };
+    }
   };
 
   return (
@@ -108,11 +163,15 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
                         data-testid={ `${index}-ingredient-step` }
                         id={ `${index}-ingredient-step` }
                         className={ CHECKBOX_CLASS }
+                        style={ handleStyle(ingredient) }
                       >
                         <input
                           type="checkbox"
                           name={ `${index}-ingredient-step` }
-                          onChange={ () => handleStyle(index) }
+                          onChange={ () => {
+                            handleLocalSave(ingredient);
+                          } }
+                          checked={ localSaved.meals[foodId].includes(ingredient) }
                         />
                         {` ${ingredient}: ${quantitiesArr[index]}`}
                       </p>
