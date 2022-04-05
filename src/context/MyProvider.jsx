@@ -13,6 +13,8 @@ const MyProvider = ({ children }) => {
   const [filteredDrinks, setFilteredDrinks] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [foods, setFoods] = useState([]);
+  const [favoriteDrink, setFavoriteDrinks] = useState([]);
+  const [favoriteFoods, setFavoriteFoods] = useState({});
   const [isDrinks, setDrinks] = useState([]);
 
   useEffect(() => {
@@ -50,6 +52,10 @@ const MyProvider = ({ children }) => {
   const contextValue = {
     email,
     updateEmail: (value) => setEmail(value),
+    favoriteDrink,
+    setFavoriteDrinks,
+    favoriteFoods,
+    setFavoriteFoods,
     inputValue,
     setInputValue,
     filter,
@@ -69,6 +75,8 @@ const MyProvider = ({ children }) => {
     updateIsFiltered: (value) => setIsFiltered(value),
     exploreFoodsByIngredients,
     exploreDrinksByIngredients,
+    setFilteredFoods,
+    setIsFiltered,
   };
 
   return (

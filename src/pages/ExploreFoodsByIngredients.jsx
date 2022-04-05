@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import MyContext from '../context/MyContext';
+import NationalitiesCard from '../components/NationalitiesCard';
 
 function ExploreFoodsByIngredients({ history }) {
   const { exploreFoodsByIngredients } = useContext(MyContext);
@@ -49,6 +50,7 @@ function ExploreFoodsByIngredients({ history }) {
             </div>
           ))
         }
+        <NationalitiesCard />
       </div>
       <FooterComponent />
     </>

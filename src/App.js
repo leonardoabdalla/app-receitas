@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
+import VLibras from '@djpfs/react-vlibras';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyProvider from './context/MyProvider';
 import Login from './pages/Login';
@@ -23,6 +24,7 @@ import Foods from './pages/Foods';
 function App() {
   return (
     <MyProvider>
+      <VLibras />
       <BrowserRouter>
         <Switch>
           <Route exact path="/" render={ (props) => <Login { ...props } /> } />
