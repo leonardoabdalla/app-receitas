@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { shape, string } from 'prop-types';
+import { func, shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchDrinkById } from '../api/services';
 import '../styles/DrinkInProgressComponent.css';
@@ -8,12 +8,13 @@ import FavoriteDrinkButton from './FavoriteDrinkButton';
 
 const CHECKBOX_CLASS = 'ingredient-step';
 
-const DrinkInProgressComponent = ({ location: { pathname } }) => {
+const DrinkInProgressComponent = ({ location: { pathname }, history }) => {
   const [drinkId, setDrinkId] = useState('');
   const [drinkItem, setDrinkItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
   const [localSaved, setLocalSaved] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     const getPath = pathname.split('/')[2];
@@ -110,6 +111,15 @@ const DrinkInProgressComponent = ({ location: { pathname } }) => {
     }));
   };
 
+  useEffect(() => {
+    if (localSaved?.cocktails?.[drinkId].length === ingredientsArray.length) {
+      return setIsDisabled(false);
+    }
+    setIsDisabled(true);
+    console.log('fora - localSaved', localSaved);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localSaved, ingredientsArray]);
+
   const handleStyle = (ingredient) => {
     if (localSaved?.cocktails?.[drinkId].includes(ingredient)) {
       return { textDecoration: 'line-through' };
@@ -178,9 +188,10 @@ const DrinkInProgressComponent = ({ location: { pathname } }) => {
           <button
             type="button"
             data-testid="finish-recipe-btn"
-            onClick={ () => { } }
+            onClick={ () => history.push('/done-recipes') }
+            disabled={ isDisabled }
           >
-            Finalizar Receita
+            Finish Recipe
           </button>
 
         </div>
@@ -192,6 +203,9 @@ const DrinkInProgressComponent = ({ location: { pathname } }) => {
 DrinkInProgressComponent.propTypes = {
   location: shape({
     pathname: string.isRequired,
+  }).isRequired,
+  history: shape({
+    push: func.isRequired,
   }).isRequired,
 };
 
