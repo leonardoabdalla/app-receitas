@@ -3,7 +3,6 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Profile from '../pages/Profile';
-import Header from '../components/Header';
 
 describe('Teste a pagina <Profile />', () => {
   it('Verifica se existe o elemento Profile', () => {
@@ -66,6 +65,6 @@ describe('Teste a pagina <Profile />', () => {
   });
 });
 
-// 25 - Limpar local storage
+// Falta um teste para cobrir a linha 13.
 
 // npm run test-coverage
