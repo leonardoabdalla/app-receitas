@@ -14,9 +14,9 @@ const Header = ({ history: { location } }) => {
           <Link to="/profile">
             <button
               type="button"
+              data-testid="profile-top-btn"
             >
               <img
-                data-testid="profile-top-btn"
                 src={ profileIcon }
                 alt="Um botão com o design de uma pessoa, que ao ser clicado
         leva o usuário para a página do usuário"
