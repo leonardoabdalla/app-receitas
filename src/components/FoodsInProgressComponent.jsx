@@ -37,6 +37,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
           [getPath]: [],
         },
       });
+
       return localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...getLocalSaved,
         meals: {
