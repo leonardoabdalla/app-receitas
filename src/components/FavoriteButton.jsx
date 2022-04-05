@@ -16,16 +16,18 @@ const FavoriteButton = ({ foodId }) => {
       if (recipe.id === foodId) return setIsFavorite(true);
     });
 
-    const getFoodItem = async () => {
-      const getFood = await fetchFoodById(foodId);
-      return setFoodItem(getFood[0]);
-    };
-    getFoodItem();
+    if (foodId) {
+      const getFoodItem = async () => {
+        const getFood = await fetchFoodById(foodId);
+        return setFoodItem(getFood[0]);
+      };
+      getFoodItem();
+    }
 
     const getLocalItems = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (getLocalItems) return setLocalStorageItems(getLocalItems);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [foodId]);
 
   useEffect(() => {
     setFoodToSaveLocal({
@@ -48,6 +50,8 @@ const FavoriteButton = ({ foodId }) => {
       const removeFavorite = localStorageItems
         .filter((favorite) => favorite.id !== foodId);
       localStorage.setItem('favoriteRecipes', JSON.stringify(removeFavorite));
+      setLocalStorageItems(removeFavorite);
+      setIsFavorite(false);
     }
   };
 

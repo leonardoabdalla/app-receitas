@@ -3,6 +3,8 @@ import { shape, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { fetchDrinkById } from '../api/services';
 import '../styles/DrinkInProgressComponent.css';
+import ShareButton from './ShareButton';
+import FavoriteDrinkButton from './FavoriteDrinkButton';
 
 const CHECKBOX_CLASS = 'ingredient-step';
 
@@ -136,20 +138,11 @@ const DrinkInProgressComponent = ({ location: { pathname } }) => {
             width="250px"
           />
           <div>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => { } }
-            >
-              Compartilhar
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-              onClick={ () => { } }
-            >
-              Favoritar
-            </button>
+            <ShareButton
+              pathname={ `/drinks/${pathname.split('/')[2]}` }
+              testId="share-btn"
+            />
+            <FavoriteDrinkButton drinkId={ pathname.split('/')[2] } />
           </div>
           <div>
             <h3>Ingredientes</h3>
