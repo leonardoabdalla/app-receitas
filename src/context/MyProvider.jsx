@@ -75,6 +75,8 @@ const MyProvider = ({ children }) => {
     updateIsFiltered: (value) => setIsFiltered(value),
     exploreFoodsByIngredients,
     exploreDrinksByIngredients,
+    setFilteredFoods,
+    setIsFiltered,
   };
 
   return (
