@@ -18,7 +18,6 @@ const FavoriteButton = ({ foodId }) => {
 
     const getFoodItem = async () => {
       const getFood = await fetchFoodById(foodId);
-      console.log('getFood', getFood);
       return setFoodItem(getFood[0]);
     };
     getFoodItem();

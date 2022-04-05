@@ -11,23 +11,31 @@ const DrinkInProgressComponent = ({ location: { pathname } }) => {
   const [drinkItem, setDrinkItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
+  const [localSaved, setLocalSaved] = useState([]);
 
   useEffect(() => {
     const getPath = pathname.split('/')[2];
     setDrinkId(getPath);
+
+    const getDrinkById = async () => {
+      const getDrink = await fetchDrinkById(getPath);
+      return setDrinkItem(getDrink[0]);
+    };
+    getDrinkById();
+
+    const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setLocalSaved(getLocalSaved);
+
+    if (!getLocalSaved) {
+      setLocalSaved({
+        cocktails: {
+          [getPath]: [],
+        },
+      });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (drinkId) {
-      const getDrinkById = async () => {
-        const getDrink = await fetchDrinkById(drinkId);
-        console.log('getDrink', getDrink);
-        return setDrinkItem(getDrink[0]);
-      };
-      getDrinkById();
-    }
-  }, [drinkId]);
 
   useEffect(() => {
     const getEntries = Object.entries(drinkItem);
@@ -50,15 +58,60 @@ const DrinkInProgressComponent = ({ location: { pathname } }) => {
     setQuantitiesArr(noEmptyQuantArr);
   }, [drinkItem]);
 
-  const handleStyle = (index) => {
-    const getElemment = document.getElementById(`${index}-ingredient-step`);
-    console.log('antes getElemment', getElemment.className);
-    if (getElemment.className === CHECKBOX_CLASS) {
-      getElemment.className = 'checked-ingredient-step';
-      return console.log('dentro getElemment', getElemment.className);
+  const handleLocalSave = (ingredient) => {
+    const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
+    if (getLocalSaved?.cocktails?.[drinkId].includes(ingredient)) {
+      const filteredArr = getLocalSaved.cocktails[drinkId]
+        .filter((item) => item !== ingredient);
+
+      setLocalSaved({
+        ...getLocalSaved,
+        cocktails: {
+          [drinkId]: [...filteredArr],
+        },
+      });
+
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...getLocalSaved,
+        cocktails: {
+          [drinkId]: [...filteredArr],
+        },
+      }));
     }
-    getElemment.className = CHECKBOX_CLASS;
-    return console.log('dentro getElemment', getElemment.className);
+    if (getLocalSaved) {
+      const tempItem = getLocalSaved.cocktails?.[drinkId] || [];
+      setLocalSaved({
+        ...getLocalSaved,
+        cocktails: {
+          [drinkId]: [...tempItem, ingredient],
+        },
+      });
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...getLocalSaved,
+        cocktails: {
+          [drinkId]: [...tempItem, ingredient],
+        },
+      }));
+    }
+
+    setLocalSaved({
+      cocktails: {
+        [drinkId]: [ingredient],
+      },
+    });
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      cocktails: {
+        [drinkId]: [ingredient],
+      },
+    }));
+  };
+
+  const handleStyle = (ingredient) => {
+    if (localSaved?.cocktails?.[drinkId].includes(ingredient)) {
+      return { textDecoration: 'line-through' };
+    }
   };
 
   return (
@@ -109,11 +162,13 @@ const DrinkInProgressComponent = ({ location: { pathname } }) => {
                         data-testid={ `${index}-ingredient-step` }
                         id={ `${index}-ingredient-step` }
                         className={ CHECKBOX_CLASS }
+                        style={ handleStyle(ingredient) }
                       >
                         <input
                           type="checkbox"
                           name={ `${index}-ingredient-step` }
-                          onChange={ () => handleStyle(index) }
+                          onChange={ () => handleLocalSave(ingredient) }
+                          checked={ localSaved.cocktails?.[drinkId].includes(ingredient) }
                         />
                         {` ${ingredient}: ${quantitiesArr[index]}`}
                       </p>

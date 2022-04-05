@@ -63,7 +63,7 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
   const handleLocalSave = (ingredient) => {
     const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
-    if (getLocalSaved?.meals[foodId].includes(ingredient)) {
+    if (getLocalSaved?.meals?.[foodId].includes(ingredient)) {
       const filteredArr = getLocalSaved.meals[foodId]
         .filter((item) => item !== ingredient);
 
@@ -81,17 +81,19 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
         },
       }));
     }
+
     if (getLocalSaved) {
+      const tempItem = getLocalSaved.meals?.[foodId] || [];
       setLocalSaved({
         ...getLocalSaved,
         meals: {
-          [foodId]: [...getLocalSaved.meals[foodId], ingredient],
+          [foodId]: [...tempItem, ingredient],
         },
       });
       return localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...getLocalSaved,
         meals: {
-          [foodId]: [...getLocalSaved.meals[foodId], ingredient],
+          [foodId]: [...tempItem, ingredient],
         },
       }));
     }
@@ -110,7 +112,7 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
   };
 
   const handleStyle = (ingredient) => {
-    if (localSaved.meals[foodId].includes(ingredient)) {
+    if (localSaved.meals?.[foodId].includes(ingredient)) {
       return { textDecoration: 'line-through' };
     }
   };
@@ -171,7 +173,7 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
                           onChange={ () => {
                             handleLocalSave(ingredient);
                           } }
-                          checked={ localSaved.meals[foodId].includes(ingredient) }
+                          checked={ localSaved.meals?.[foodId].includes(ingredient) }
                         />
                         {` ${ingredient}: ${quantitiesArr[index]}`}
                       </p>
