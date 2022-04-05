@@ -10,12 +10,9 @@ const StartContinueButton = ({ foodId }) => {
   useEffect(() => {
     const getLocalStorageDone = JSON.parse(localStorage.getItem('doneRecipes'));
 
-    console.log('oi', foodId);
     if (getLocalStorageDone) {
       getLocalStorageDone.forEach((recipe) => {
-        console.log('recipe.id', recipe.id);
         if (recipe.id === foodId) {
-          console.log('oi2', foodId);
           return setShowButton(false);
         }
       });
@@ -23,7 +20,7 @@ const StartContinueButton = ({ foodId }) => {
 
     const getLocalStorageProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
-    if (getLocalStorageProgress && Object.keys(getLocalStorageProgress?.meals)
+    if (getLocalStorageProgress?.meals && Object.keys(getLocalStorageProgress?.meals)
       .includes(foodId)) setButtonText('Continue Recipe');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
