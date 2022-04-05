@@ -29,12 +29,21 @@ const DrinkInProgressComponent = ({ location: { pathname }, history }) => {
     const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
     setLocalSaved(getLocalSaved);
 
-    if (!getLocalSaved) {
+    if (!getLocalSaved?.cocktails?.[getPath]) {
       setLocalSaved({
+        ...getLocalSaved,
         cocktails: {
+          ...getLocalSaved.cocktails,
           [getPath]: [],
         },
       });
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...getLocalSaved,
+        cocktails: {
+          ...getLocalSaved.cocktails,
+          [getPath]: [],
+        },
+      }));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,21 +72,20 @@ const DrinkInProgressComponent = ({ location: { pathname }, history }) => {
 
   const handleLocalSave = (ingredient) => {
     const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
-
     if (getLocalSaved?.cocktails?.[drinkId].includes(ingredient)) {
       const filteredArr = getLocalSaved.cocktails[drinkId]
         .filter((item) => item !== ingredient);
-
       setLocalSaved({
         ...getLocalSaved,
         cocktails: {
+          ...getLocalSaved.cocktails,
           [drinkId]: [...filteredArr],
         },
       });
-
       return localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...getLocalSaved,
         cocktails: {
+          ...getLocalSaved.cocktails,
           [drinkId]: [...filteredArr],
         },
       }));
@@ -87,36 +95,37 @@ const DrinkInProgressComponent = ({ location: { pathname }, history }) => {
       setLocalSaved({
         ...getLocalSaved,
         cocktails: {
+          ...getLocalSaved.cocktails,
           [drinkId]: [...tempItem, ingredient],
         },
       });
       return localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...getLocalSaved,
         cocktails: {
+          ...getLocalSaved.cocktails,
           [drinkId]: [...tempItem, ingredient],
         },
       }));
     }
-
     setLocalSaved({
       cocktails: {
+        ...getLocalSaved.cocktails,
         [drinkId]: [ingredient],
       },
     });
-
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       cocktails: {
+        ...getLocalSaved.cocktails,
         [drinkId]: [ingredient],
       },
     }));
   };
 
   useEffect(() => {
-    if (localSaved?.cocktails?.[drinkId].length === ingredientsArray.length) {
+    if (localSaved?.cocktails?.[drinkId]?.length === ingredientsArray.length) {
       return setIsDisabled(false);
     }
     setIsDisabled(true);
-    console.log('fora - localSaved', localSaved);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localSaved, ingredientsArray]);
 

@@ -29,12 +29,21 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
     const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
     setLocalSaved(getLocalSaved);
 
-    if (!getLocalSaved) {
+    if (!getLocalSaved?.meals?.[getPath]) {
       setLocalSaved({
+        ...getLocalSaved,
         meals: {
+          ...getLocalSaved.meals,
           [getPath]: [],
         },
       });
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...getLocalSaved,
+        meals: {
+          ...getLocalSaved.meals,
+          [getPath]: [],
+        },
+      }));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,61 +74,60 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
 
   const handleLocalSave = (ingredient) => {
     const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
-
     if (getLocalSaved?.meals?.[foodId].includes(ingredient)) {
       const filteredArr = getLocalSaved.meals[foodId]
         .filter((item) => item !== ingredient);
-
       setLocalSaved({
         ...getLocalSaved,
         meals: {
+          ...getLocalSaved.meals,
           [foodId]: [...filteredArr],
         },
       });
-
       return localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...getLocalSaved,
         meals: {
+          ...getLocalSaved.meals,
           [foodId]: [...filteredArr],
         },
       }));
     }
-
     if (getLocalSaved) {
       const tempItem = getLocalSaved.meals?.[foodId] || [];
       setLocalSaved({
         ...getLocalSaved,
         meals: {
+          ...getLocalSaved.meals,
           [foodId]: [...tempItem, ingredient],
         },
       });
       return localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...getLocalSaved,
         meals: {
+          ...getLocalSaved.meals,
           [foodId]: [...tempItem, ingredient],
         },
       }));
     }
-
     setLocalSaved({
       meals: {
+        ...getLocalSaved.meals,
         [foodId]: [ingredient],
       },
     });
-
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       meals: {
+        ...getLocalSaved.meals,
         [foodId]: [ingredient],
       },
     }));
   };
 
   useEffect(() => {
-    if (localSaved?.meals?.[foodId].length === ingredientsArray.length) {
+    if (localSaved?.meals?.[foodId]?.length === ingredientsArray.length) {
       return setIsDisabled(false);
     }
     setIsDisabled(true);
-    console.log('fora - localSaved', localSaved);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localSaved, ingredientsArray]);
 
