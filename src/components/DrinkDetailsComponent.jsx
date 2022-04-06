@@ -102,11 +102,11 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
                   data-testid={ `${index}-recomendation-card` }
                   key={ index }
                 >
-                  <div
+                  <button
                     onClick={ () => history.push(`/foods/${food.idMeal}`) }
-                    onKeyDown={ () => history.push(`/foods/${food.idMeal}`) }
-                    role="button"
-                    tabIndex={ index }
+                    /* onKeyDown={ () => history.push(`/foods/${food.idMeal}`) } */
+                    type="button"
+                    /* tabIndex={ index } */
                   >
                     <img src={ food.strMealThumb } alt={ food.strMeal } width="100px" />
                     <h3
@@ -115,7 +115,7 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
                       { food.strMeal }
 
                     </h3>
-                  </div>
+                  </button>
                 </li>
               );
             })}

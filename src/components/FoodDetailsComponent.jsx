@@ -8,7 +8,7 @@ import FavoriteButton from './FavoriteButton';
 import StartContinueButton from './StartContinueButton';
 
 const FoodDetailsComponent = ({ location: { pathname }, history }) => {
-  const [foodId, setFoodId] = useState('');
+  const [foodId, setFoodId] = useState('52977');
   const [foodItem, setFoodItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
