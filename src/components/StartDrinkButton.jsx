@@ -20,8 +20,9 @@ const StartDrinkButton = ({ drinkId }) => {
 
     const getLocalStorageProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
-    if (getLocalStorageProgress && Object.keys(getLocalStorageProgress?.cocktails)
-      .includes(drinkId)) setButtonText('Continue Recipe');
+    if (getLocalStorageProgress?.cocktails
+      && Object.keys(getLocalStorageProgress?.cocktails)
+        .includes(drinkId)) setButtonText('Continue Recipe');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

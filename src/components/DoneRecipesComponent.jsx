@@ -15,12 +15,7 @@ const DoneRecipesComponent = ({ history }) => {
   }, []);
 
   const handleFilter = (filter) => {
-    const filterArr = localSaved.filter((item) => {
-      console.log('item.type', item.type);
-      console.log('filter', filter.toLowerCase());
-      return item.type === filter.toLowerCase();
-    });
-    console.log('filterArr', filterArr);
+    const filterArr = localSaved.filter((item) => item.type === filter.toLowerCase());
     return setArrayToRender(filterArr);
   };
 
