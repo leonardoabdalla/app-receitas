@@ -15,6 +15,7 @@ const Header = ({ history: { location } }) => {
             <button
               type="button"
               data-testid="profile-top-btn"
+              src={ profileIcon }
             >
               <img
                 src={ profileIcon }

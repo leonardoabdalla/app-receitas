@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { shape, func } from 'prop-types';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import MyContext from '../context/MyContext';
@@ -58,7 +58,9 @@ function ExploreFoodsByIngredients({ history }) {
 }
 
 ExploreFoodsByIngredients.propTypes = {
-  history: PropTypes.node.isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 export default withRouter(ExploreFoodsByIngredients);
