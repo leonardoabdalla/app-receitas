@@ -33,7 +33,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
       setLocalSaved({
         ...getLocalSaved,
         meals: {
-          ...getLocalSaved.meals,
+          ...getLocalSaved?.meals,
           [getPath]: [],
         },
       });
@@ -41,7 +41,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
       return localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...getLocalSaved,
         meals: {
-          ...getLocalSaved.meals,
+          ...getLocalSaved?.meals,
           [getPath]: [],
         },
       }));

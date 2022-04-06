@@ -33,14 +33,14 @@ const DrinkInProgressComponent = ({ location: { pathname }, history }) => {
       setLocalSaved({
         ...getLocalSaved,
         cocktails: {
-          ...getLocalSaved.cocktails,
+          ...getLocalSaved?.cocktails,
           [getPath]: [],
         },
       });
       return localStorage.setItem('inProgressRecipes', JSON.stringify({
         ...getLocalSaved,
         cocktails: {
-          ...getLocalSaved.cocktails,
+          ...getLocalSaved?.cocktails,
           [getPath]: [],
         },
       }));
