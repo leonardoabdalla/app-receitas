@@ -4,10 +4,10 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import App from '../App';
 
-describe('Testes do componente <FoodDetailsComponent', () => {
+describe('Testes da página FoodsInProgress', () => {
   afterEach(() => cleanup);
 
-  it('1 -  Testa se o componente e os cards de recomendação renderizaram.', async () => {
+  it('1 - Testa se o componente e os cards de recomendação renderizaram. ', async () => {
     renderWithRouter(
       <App />,
     );
@@ -25,23 +25,25 @@ describe('Testes do componente <FoodDetailsComponent', () => {
     const getFirstRecipe = screen.getByTestId('0-recipe-card');
     userEvent.click(getFirstRecipe);
 
-    await waitForElement(() => screen.getByTestId('0-recomendation-card'));
-    const getFirstRecCard = screen.getByTestId('0-recomendation-card');
+    await waitForElement(() => screen.getByTestId('start-recipe-btn'));
+    const getStartButton = screen.getByTestId('start-recipe-btn');
 
-    expect(getFirstRecCard).toBeInTheDocument();
+    expect(getStartButton).toBeInTheDocument();
 
-    userEvent.click(getFirstRecCard);
+    userEvent.click(getStartButton);
 
-    await waitForElement(() => screen.getByText('GG'));
-    const getTitle = screen.getByText('GG');
+    await waitForElement(() => screen.getByText('Food In Progress'));
+    const getTitle = screen.getByText('Food In Progress');
 
     expect(getTitle).toBeInTheDocument();
 
-    userEvent.click(getTitle);
+    await waitForElement(() => screen.getByTestId('0-ingredient-step'));
+    const getCheckbox = screen.getByTestId('0-ingredient-step');
 
-    await waitForElement(() => screen.getByText('Drink Details'));
-    const getDrinkTitle = screen.getByText('Drink Details');
+    expect(getCheckbox).toBeInTheDocument();
 
-    expect(getDrinkTitle).toBeInTheDocument();
+    userEvent.click(getCheckbox);
+
+    expect(getCheckbox).toHaveTextContent('Lentils: 1 cup');
   });
 });

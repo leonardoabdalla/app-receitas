@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { func, shape, string } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchFoodById } from '../api/services';
 import '../styles/FoodsInProgressComponent.css';
 import ShareButton from './ShareButton';
@@ -8,13 +7,16 @@ import FavoriteButton from './FavoriteButton';
 
 const CHECKBOX_CLASS = 'ingredient-step';
 
-const FoodDetailsComponent = ({ location: { pathname }, history }) => {
+const FoodDetailsComponent = () => {
   const [foodId, setFoodId] = useState('');
   const [foodItem, setFoodItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
   const [localSaved, setLocalSaved] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const history = useHistory();
+  const { location: { pathname } } = history;
 
   useEffect(() => {
     const getPath = pathname.split('/')[2];
@@ -214,13 +216,4 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   );
 };
 
-FoodDetailsComponent.propTypes = {
-  location: shape({
-    pathname: string.isRequired,
-  }).isRequired,
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(FoodDetailsComponent);
+export default FoodDetailsComponent;

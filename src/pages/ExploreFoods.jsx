@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 
-function ExploreFoods({ history }) {
+function ExploreFoods() {
   const api = 'https://www.themealdb.com/api/json/v1/1/random.php';
   const [foodsId, setFoodsId] = useState('');
+  const history = useHistory();
+
   useEffect(() => {
     const fetchFoods = async () => {
       const { meals } = await fetch(api).then((response) => response.json());
@@ -55,10 +56,4 @@ function ExploreFoods({ history }) {
   );
 }
 
-ExploreFoods.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(ExploreFoods);
+export default ExploreFoods;
