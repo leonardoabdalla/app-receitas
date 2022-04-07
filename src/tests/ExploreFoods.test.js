@@ -43,5 +43,6 @@ describe('Teste do componente <ExploreFoods />', () => {
     userEvent.click(exploreFoodsSurprise);
     const name = screen.getByText(/Food Details/i);
     expect(name).toBeInTheDocument();
+    //
   });
 });
