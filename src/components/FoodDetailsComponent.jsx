@@ -6,6 +6,7 @@ import '../styles/FoodDetailsComponent.css';
 import ShareButton from './ShareButton';
 import FavoriteButton from './FavoriteButton';
 import StartContinueButton from './StartContinueButton';
+import Header from './Header';
 
 const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [foodId, setFoodId] = useState('');
@@ -61,6 +62,7 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
 
   return (
     <>
+      <Header />
       <h1>Food Details</h1>
       <div>
         <h2
