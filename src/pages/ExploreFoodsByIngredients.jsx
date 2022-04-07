@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import MyContext from '../context/MyContext';
 import NationalitiesCard from '../components/NationalitiesCard';
 
-function ExploreFoodsByIngredients({ history }) {
+function ExploreFoodsByIngredients() {
   const { exploreFoodsByIngredients } = useContext(MyContext);
   const apiIngredients = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
   const [ingredients, setIngredients] = useState([]);
+  const history = useHistory();
+
   useEffect(() => {
     const fetchIngredientsFood = async () => {
       const { meals } = await fetch(apiIngredients).then((response) => response.json());
@@ -57,10 +58,4 @@ function ExploreFoodsByIngredients({ history }) {
   );
 }
 
-ExploreFoodsByIngredients.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(ExploreFoodsByIngredients);
+export default ExploreFoodsByIngredients;

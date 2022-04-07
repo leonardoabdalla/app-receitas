@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import { Link, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchComponent from './SearchComponent';
 
-const Header = ({ history: { location } }) => {
+const Header = () => {
   const [isHidden, setIsHidden] = useState(false);
-  if (location.pathname === '/foods') {
+
+  const history = useHistory();
+  const { location: { pathname } } = history;
+
+  if (pathname === '/foods') {
     return (
       <div>
         <header>
@@ -41,7 +44,7 @@ const Header = ({ history: { location } }) => {
       </div>
     );
   }
-  if (location.pathname === '/drinks') {
+  if (pathname === '/drinks') {
     return (
       <div>
         <header>
@@ -74,7 +77,7 @@ const Header = ({ history: { location } }) => {
       </div>
     );
   }
-  if (location.pathname === '/explore/foods/nationalities') {
+  if (pathname === '/explore/foods/nationalities') {
     return (
       <div>
         <header>
@@ -123,33 +126,35 @@ const Header = ({ history: { location } }) => {
           </button>
         </Link>
         {
-          location.pathname === '/explore' && <h1 data-testid="page-title">Explore</h1>
+          pathname === '/explore'
+            && <h1 data-testid="page-title">Explore</h1>
         }
         {
-          location.pathname === '/profile' && <h1 data-testid="page-title">Profile</h1>
+          pathname === '/profile'
+            && <h1 data-testid="page-title">Profile</h1>
         }
         {
-          location.pathname === '/favorite-recipes'
+          pathname === '/favorite-recipes'
         && <h1 data-testid="page-title">Favorite Recipes</h1>
         }
         {
-          location.pathname === '/done-recipes'
+          pathname === '/done-recipes'
         && <h1 data-testid="page-title">Done Recipes</h1>
         }
         {
-          location.pathname === '/explore/foods/ingredients'
+          pathname === '/explore/foods/ingredients'
         && <h1 data-testid="page-title">Explore Ingredients</h1>
         }
         {
-          location.pathname === '/explore/foods'
+          pathname === '/explore/foods'
         && <h1 data-testid="page-title">Explore Foods</h1>
         }
         {
-          location.pathname === '/explore/drinks'
+          pathname === '/explore/drinks'
         && <h1 data-testid="page-title">Explore Drinks</h1>
         }
         {
-          location.pathname === '/explore/drinks/ingredients'
+          pathname === '/explore/drinks/ingredients'
         && <h1 data-testid="page-title">Explore Ingredients</h1>
         }
       </header>
@@ -157,10 +162,4 @@ const Header = ({ history: { location } }) => {
   );
 };
 
-Header.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(Header);
+export default Header;
