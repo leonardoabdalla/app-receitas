@@ -33,3 +33,4 @@ describe('Teste do componente <Explore />', () => {
     expect(newPageExploreDrinks).toBeInTheDocument();
   });
 });
+//
