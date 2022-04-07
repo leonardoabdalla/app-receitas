@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { shape, func } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const LoginComponent = ({ history }) => {
+const LoginComponent = () => {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     const emailRegex = /\S+@\S+\.\S+/;
@@ -54,10 +54,4 @@ const LoginComponent = ({ history }) => {
   );
 };
 
-LoginComponent.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(LoginComponent);
+export default LoginComponent;

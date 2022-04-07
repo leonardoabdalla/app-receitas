@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { func, shape, string } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchDrinkById, fetchFoods } from '../api/services';
 import '../styles/DrinkDetailsComponent .css';
 import ShareButton from './ShareButton';
 import FavoriteDrinkButton from './FavoriteDrinkButton';
 import StartDrinkButton from './StartDrinkButton';
 
-const DrinkDetailComponent = ({ location: { pathname }, history }) => {
+const DrinkDetailComponent = () => {
   const [drinkItem, setDrinkItem] = useState([{}]);
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArray, setQuantitiesArray] = useState([]);
   const [recommendedFoods, setRecommendedFoods] = useState([{}]);
+
+  const history = useHistory();
+  const { location: { pathname } } = history;
 
   useEffect(() => {
     const getPathId = pathname.split('/')[2];
@@ -127,13 +129,4 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   );
 };
 
-DrinkDetailComponent.propTypes = {
-  location: shape({
-    pathname: string.isRequired,
-  }).isRequired,
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(DrinkDetailComponent);
+export default DrinkDetailComponent;

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { shape, func } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 
-const DrinksCard = ({ history }) => {
+const DrinksCard = () => {
   const [arrayToRender, setArrayToRender] = useState([]);
   const { filteredDrinks, isFiltered, isDrinks } = useContext(MyContext);
+  const history = useHistory();
 
   useEffect(() => (
     isFiltered ? setArrayToRender(filteredDrinks) : setArrayToRender(isDrinks)),
@@ -45,10 +45,4 @@ const DrinksCard = ({ history }) => {
   );
 };
 
-DrinksCard.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(DrinksCard);
+export default DrinksCard;

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
 import { fetchFoodByIngredient,
   fetchFoodByName,
@@ -10,7 +9,7 @@ import { fetchFoodByIngredient,
   fetchDrinkByFirstLetter,
 } from '../api/services';
 
-const SearchComponent = ({ history: { location }, history }) => {
+const SearchComponent = () => {
   const {
     filter,
     inputValue,
@@ -20,6 +19,9 @@ const SearchComponent = ({ history: { location }, history }) => {
     updateIsFiltered,
     updateFilteredDrinks,
   } = useContext(MyContext);
+
+  const history = useHistory();
+  const { location } = history;
 
   const updateFoodArray = (api) => {
     if (api === null) {
@@ -160,10 +162,4 @@ const SearchComponent = ({ history: { location }, history }) => {
   );
 };
 
-SearchComponent.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(SearchComponent);
+export default SearchComponent;

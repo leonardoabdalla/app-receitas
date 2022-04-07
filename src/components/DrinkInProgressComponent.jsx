@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { func, shape, string } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchDrinkById } from '../api/services';
 import '../styles/DrinkInProgressComponent.css';
 import ShareButton from './ShareButton';
@@ -8,13 +7,16 @@ import FavoriteDrinkButton from './FavoriteDrinkButton';
 
 const CHECKBOX_CLASS = 'ingredient-step';
 
-const DrinkInProgressComponent = ({ location: { pathname }, history }) => {
+const DrinkInProgressComponent = () => {
   const [drinkId, setDrinkId] = useState('');
   const [drinkItem, setDrinkItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
   const [localSaved, setLocalSaved] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const history = useHistory();
+  const { location: { pathname } } = history;
 
   useEffect(() => {
     const getPath = pathname.split('/')[2];
@@ -209,13 +211,4 @@ const DrinkInProgressComponent = ({ location: { pathname }, history }) => {
   );
 };
 
-DrinkInProgressComponent.propTypes = {
-  location: shape({
-    pathname: string.isRequired,
-  }).isRequired,
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(DrinkInProgressComponent);
+export default DrinkInProgressComponent;
