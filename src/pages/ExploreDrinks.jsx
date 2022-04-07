@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 
-function ExploreDrinks({ history }) {
+function ExploreDrinks() {
   const api = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
   const [drinksId, setDrinksId] = useState('');
+  const history = useHistory();
+
   useEffect(() => {
     const fetchDrinks = async () => {
       const { drinks } = await fetch(api).then((response) => response.json());
@@ -44,10 +45,5 @@ function ExploreDrinks({ history }) {
   );
 }
 
-ExploreDrinks.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
 //
-export default withRouter(ExploreDrinks);
+export default ExploreDrinks;

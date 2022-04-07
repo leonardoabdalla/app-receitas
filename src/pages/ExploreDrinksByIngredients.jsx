@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import MyContext from '../context/MyContext';
 
-function ExploreDrinksByIngredients({ history }) {
+function ExploreDrinksByIngredients() {
   const { exploreDrinksByIngredients } = useContext(MyContext);
   const apiIngredients = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
   const [ingredients, setIngredients] = useState([]);
+  const history = useHistory();
+
   useEffect(() => {
     const fetchIngredientsDrinks = async () => {
       const { drinks } = await fetch(apiIngredients).then((response) => response.json());
@@ -55,10 +56,4 @@ function ExploreDrinksByIngredients({ history }) {
   );
 }
 
-ExploreDrinksByIngredients.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(ExploreDrinksByIngredients);
+export default ExploreDrinksByIngredients;

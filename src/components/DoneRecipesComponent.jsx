@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { func, shape } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import ShareButton from './ShareButton';
 import '../styles/DoneRecipes.css';
 
-const DoneRecipesComponent = ({ history }) => {
+const DoneRecipesComponent = () => {
   const [arrayToRender, setArrayToRender] = useState([]);
   const [localSaved, setLocalSaved] = useState([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     const getLocalDone = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -99,10 +100,4 @@ const DoneRecipesComponent = ({ history }) => {
   );
 };
 
-DoneRecipesComponent.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(DoneRecipesComponent);
+export default DoneRecipesComponent;
