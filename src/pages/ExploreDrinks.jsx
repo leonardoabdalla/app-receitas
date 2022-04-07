@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 
 function ExploreDrinks() {
   const api = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-  const [drinksId, setDrinksId] = useState('');
   const history = useHistory();
-
-  useEffect(() => {
-    const fetchDrinks = async () => {
-      const { drinks } = await fetch(api).then((response) => response.json());
-      setDrinksId(drinks[0].idDrink);
-    };
-    fetchDrinks();
-  }, []);
 
   const handleClickByIngredient = () => {
     history.push('/explore/drinks/ingredients');
   };
 
-  const handleClickSurprise = () => {
-    history.push(`/drinks/${drinksId}`);
+  const handleClickSurprise = async () => {
+    const { drinks } = await fetch(api).then((response) => response.json());
+    history.push(`/drinks/${drinks[0].idDrink}`);
   };
   return (
     <div>
