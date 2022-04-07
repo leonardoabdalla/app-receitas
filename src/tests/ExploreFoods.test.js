@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
@@ -36,9 +36,9 @@ describe('Teste do componente <ExploreFoods />', () => {
     const thirdButton = screen.getByRole('button', { name: /surprise me!/i });
     expect(thirdButton).toBeInTheDocument();
   });
-  it.only('Teste se ao clicar no botão de Surprise me,'
+  it('Teste se ao clicar no botão de Surprise me,'
       + 'redireciona para a página Food Details', () => {
-    render(<ExploreFoods />);
+    renderWithRouter(<ExploreFoods />);
     const exploreFoodsSurprise = screen.getByRole('button', { name: /surprise me!/i });
     userEvent.click(exploreFoodsSurprise);
     const name = screen.getByText(/Food Details/i);
