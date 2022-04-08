@@ -17,7 +17,7 @@ describe('Teste o componente < DoneRecipesComponent />', () => {
     expect(filterDrinkBtn).toBeInTheDocument();
   });
 
-  it('Verificando se existe 3 botões', () => {
+  it('Verifica se existe 3 botões', () => {
     renderWithRouter(<DoneRecipesComponent />);
     const three = 3;
     const buttons = screen.getAllByRole('button');
