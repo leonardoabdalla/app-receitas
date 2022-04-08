@@ -54,6 +54,7 @@ const DoneRecipesComponent = () => {
             onKeyDown={ () => history.push(`/${item.type}s/${item.id}`) }
             role="button"
             tabIndex={ index }
+            data-testid={ `${index}-horizontal-div` }
           >
             <img
               src={ item.image }
