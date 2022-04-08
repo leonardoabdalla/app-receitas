@@ -95,33 +95,19 @@ const FoodDetailsComponent = () => {
         },
       }));
     }
-    if (getLocalSaved) {
-      const tempItem = getLocalSaved.meals?.[foodId] || [];
-      setLocalSaved({
-        ...getLocalSaved,
-        meals: {
-          ...getLocalSaved.meals,
-          [foodId]: [...tempItem, ingredient],
-        },
-      });
-      return localStorage.setItem('inProgressRecipes', JSON.stringify({
-        ...getLocalSaved,
-        meals: {
-          ...getLocalSaved.meals,
-          [foodId]: [...tempItem, ingredient],
-        },
-      }));
-    }
+    const tempItem = getLocalSaved.meals?.[foodId];
     setLocalSaved({
+      ...getLocalSaved,
       meals: {
         ...getLocalSaved.meals,
-        [foodId]: [ingredient],
+        [foodId]: [...tempItem, ingredient],
       },
     });
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
+    return localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...getLocalSaved,
       meals: {
         ...getLocalSaved.meals,
-        [foodId]: [ingredient],
+        [foodId]: [...tempItem, ingredient],
       },
     }));
   };
@@ -168,8 +154,8 @@ const FoodDetailsComponent = () => {
             />
             <FavoriteButton foodId={ foodId } />
           </div>
-          <div>
-            <h3>Ingredientes</h3>
+          <h3>Ingredientes</h3>
+          <div data-testid="ingredient-box">
             {
               ingredientsArray
                 .map((ingredient, index) => (
@@ -184,7 +170,8 @@ const FoodDetailsComponent = () => {
                         <input
                           type="checkbox"
                           name={ `${index}-ingredient-step` }
-                          onChange={ () => {
+                          data-testid={ `${index}-ingredient-checkbox` }
+                          onClick={ () => {
                             handleLocalSave(ingredient);
                           } }
                           checked={ localSaved.meals?.[foodId].includes(ingredient) }
