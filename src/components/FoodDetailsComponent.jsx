@@ -5,10 +5,8 @@ import '../styles/FoodDetailsComponent.css';
 import ShareButton from './ShareButton';
 import FavoriteButton from './FavoriteButton';
 import StartContinueButton from './StartContinueButton';
-import Header from './Header';
 
 const FoodDetailsComponent = () => {
-  const [foodId, setFoodId] = useState('52977');
   const [foodItem, setFoodItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
@@ -21,25 +19,20 @@ const FoodDetailsComponent = () => {
 
   useEffect(() => {
     const getPathId = pathname.split('/')[2];
-    setFoodId(getPathId);
     const getRecomendedDrinks = async () => {
       const getDrinks = await fetchDrinks();
       return setRecomendedDrinks(getDrinks);
     };
     getRecomendedDrinks();
 
+    const getFoodById = async () => {
+      const getFood = await fetchFoodById(getPathId);
+      return setFoodItem(getFood[0]);
+    };
+    getFoodById();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (foodId) {
-      const getFoodById = async () => {
-        const getFood = await fetchFoodById(foodId);
-        return setFoodItem(getFood[0]);
-      };
-      getFoodById();
-    }
-  }, [foodId]);
 
   useEffect(() => {
     const getEntries = Object.entries(foodItem);
@@ -64,7 +57,6 @@ const FoodDetailsComponent = () => {
 
   return (
     <>
-      <Header />
       <h1>Food Details</h1>
       <div>
         <h2

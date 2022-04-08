@@ -8,9 +8,8 @@ const Header = () => {
   const [isHidden, setIsHidden] = useState(false);
 
   const history = useHistory();
-  const { location: { pathname } } = history;
 
-  if (pathname === '/foods') {
+  if (history.location.pathname === '/foods') {
     return (
       <div>
         <header>
@@ -44,7 +43,7 @@ const Header = () => {
       </div>
     );
   }
-  if (pathname === '/drinks') {
+  if (history.location.pathname === '/drinks') {
     return (
       <div>
         <header>
@@ -77,7 +76,7 @@ const Header = () => {
       </div>
     );
   }
-  if (pathname === '/explore/foods/nationalities') {
+  if (history.location.pathname === '/explore/foods/nationalities') {
     return (
       <div>
         <header>
@@ -126,35 +125,35 @@ const Header = () => {
           </button>
         </Link>
         {
-          pathname === '/explore'
+          history.location.pathname === '/explore'
             && <h1 data-testid="page-title">Explore</h1>
         }
         {
-          pathname === '/profile'
+          history.location.pathname === '/profile'
             && <h1 data-testid="page-title">Profile</h1>
         }
         {
-          pathname === '/favorite-recipes'
+          history.location.pathname === '/favorite-recipes'
         && <h1 data-testid="page-title">Favorite Recipes</h1>
         }
         {
-          pathname === '/done-recipes'
+          history.location.pathname === '/done-recipes'
         && <h1 data-testid="page-title">Done Recipes</h1>
         }
         {
-          pathname === '/explore/foods/ingredients'
+          history.location.pathname === '/explore/foods/ingredients'
         && <h1 data-testid="page-title">Explore Ingredients</h1>
         }
         {
-          pathname === '/explore/foods'
+          history.location.pathname === '/explore/foods'
         && <h1 data-testid="page-title">Explore Foods</h1>
         }
         {
-          pathname === '/explore/drinks'
+          history.location.pathname === '/explore/drinks'
         && <h1 data-testid="page-title">Explore Drinks</h1>
         }
         {
-          pathname === '/explore/drinks/ingredients'
+          history.location.pathname === '/explore/drinks/ingredients'
         && <h1 data-testid="page-title">Explore Ingredients</h1>
         }
       </header>
