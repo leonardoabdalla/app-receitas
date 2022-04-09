@@ -46,14 +46,11 @@ const DoneRecipesComponent = () => {
       </button>
       {arrayToRender && arrayToRender.map((item, index) => (
         <>
-          <div
+          <button
             type="button"
             key={ item.name }
             className="done-recipes-card"
             onClick={ () => history.push(`/${item.type}s/${item.id}`) }
-            onKeyDown={ () => history.push(`/${item.type}s/${item.id}`) }
-            role="button"
-            tabIndex={ index }
             data-testid={ `${index}-horizontal-div` }
           >
             <img
@@ -90,7 +87,7 @@ const DoneRecipesComponent = () => {
                 </p>
               ))}
             </div>
-          </div>
+          </button>
           <ShareButton
             pathname={ `/${item.type}s/${item.id}` }
             testId={ `${index}-horizontal-share-btn` }
