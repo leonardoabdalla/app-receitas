@@ -6,6 +6,7 @@ const DrinksCard = () => {
   const [arrayToRender, setArrayToRender] = useState([]);
   const { filteredDrinks, isFiltered, isDrinks } = useContext(MyContext);
   const history = useHistory();
+  const SHOW_ITEMS = 12;
 
   useEffect(() => (
     isFiltered ? setArrayToRender(filteredDrinks) : setArrayToRender(isDrinks)),
@@ -14,33 +15,26 @@ const DrinksCard = () => {
   return (
     <>
       <h2>Render Drinks</h2>
-      {arrayToRender && arrayToRender.map((drink, index) => {
-        const SHOW_ITEMS = 11;
-        if (index > SHOW_ITEMS) return null;
-        return (
-          <div
-            key={ `${drink.idDrink}` }
-            data-testid={ `${index}-recipe-card` }
-            onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
-            onKeyDown={ () => history.push(`/drinks/${drink.idDrink}`) }
-            role="button"
-            tabIndex={ index }
+      {arrayToRender && arrayToRender.slice(0, SHOW_ITEMS).map((drink, index) => (
+        <button
+          type="button"
+          key={ `${drink.idDrink}` }
+          data-testid={ `${index}-recipe-card` }
+          onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
+        >
+          <img
+            src={ `${drink.strDrinkThumb}` }
+            alt={ `${drink.strDrink}` }
+            data-testid={ `${index}-card-img` }
+            width="100px"
+          />
+          <h3
+            data-testid={ `${index}-card-name` }
           >
-
-            <img
-              src={ `${drink.strDrinkThumb}` }
-              alt={ `${drink.strDrink}` }
-              data-testid={ `${index}-card-img` }
-              width="100px"
-            />
-            <h3
-              data-testid={ `${index}-card-name` }
-            >
-              {drink.strDrink}
-            </h3>
-          </div>
-        );
-      })}
+            {drink.strDrink}
+          </h3>
+        </button>
+      ))}
     </>
   );
 };

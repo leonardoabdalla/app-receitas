@@ -171,7 +171,7 @@ const FoodDetailsComponent = () => {
                           type="checkbox"
                           name={ `${index}-ingredient-step` }
                           data-testid={ `${index}-ingredient-checkbox` }
-                          onClick={ () => {
+                          onChange={ () => {
                             handleLocalSave(ingredient);
                           } }
                           checked={ localSaved.meals?.[foodId].includes(ingredient) }

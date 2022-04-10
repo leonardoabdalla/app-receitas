@@ -92,33 +92,20 @@ const DrinkInProgressComponent = () => {
         },
       }));
     }
-    if (getLocalSaved) {
-      const tempItem = getLocalSaved.cocktails?.[drinkId] || [];
-      setLocalSaved({
-        ...getLocalSaved,
-        cocktails: {
-          ...getLocalSaved.cocktails,
-          [drinkId]: [...tempItem, ingredient],
-        },
-      });
-      return localStorage.setItem('inProgressRecipes', JSON.stringify({
-        ...getLocalSaved,
-        cocktails: {
-          ...getLocalSaved.cocktails,
-          [drinkId]: [...tempItem, ingredient],
-        },
-      }));
-    }
+
+    const tempItem = getLocalSaved.cocktails?.[drinkId];
     setLocalSaved({
+      ...getLocalSaved,
       cocktails: {
         ...getLocalSaved.cocktails,
-        [drinkId]: [ingredient],
+        [drinkId]: [...tempItem, ingredient],
       },
     });
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
+    return localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...getLocalSaved,
       cocktails: {
         ...getLocalSaved.cocktails,
-        [drinkId]: [ingredient],
+        [drinkId]: [...tempItem, ingredient],
       },
     }));
   };
@@ -182,6 +169,7 @@ const DrinkInProgressComponent = () => {
                           type="checkbox"
                           name={ `${index}-ingredient-step` }
                           onChange={ () => handleLocalSave(ingredient) }
+                          data-testid={ `${index}-ingredient-checkbox` }
                           checked={ localSaved.cocktails?.[drinkId].includes(ingredient) }
                         />
                         {` ${ingredient}: ${quantitiesArr[index]}`}
