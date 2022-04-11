@@ -1,32 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import { shape, string } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchFoodById } from '../api/services';
 import '../styles/FoodsInProgressComponent.css';
+import ShareButton from './ShareButton';
+import FavoriteButton from './FavoriteButton';
 
 const CHECKBOX_CLASS = 'ingredient-step';
 
-const FoodDetailsComponent = ({ location: { pathname } }) => {
+const FoodDetailsComponent = () => {
   const [foodId, setFoodId] = useState('');
   const [foodItem, setFoodItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
+  const [localSaved, setLocalSaved] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const history = useHistory();
+  const { location: { pathname } } = history;
 
   useEffect(() => {
     const getPath = pathname.split('/')[2];
     setFoodId(getPath);
+
+    const getFoodById = async () => {
+      const getFood = await fetchFoodById(getPath);
+      return setFoodItem(getFood[0]);
+    };
+    getFoodById();
+
+    const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setLocalSaved(getLocalSaved);
+
+    if (!getLocalSaved?.meals?.[getPath]) {
+      setLocalSaved({
+        ...getLocalSaved,
+        meals: {
+          ...getLocalSaved?.meals,
+          [getPath]: [],
+        },
+      });
+
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...getLocalSaved,
+        meals: {
+          ...getLocalSaved?.meals,
+          [getPath]: [],
+        },
+      }));
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (foodId) {
-      const getFoodById = async () => {
-        const getFood = await fetchFoodById(foodId);
-        return setFoodItem(getFood[0]);
-      };
-      getFoodById();
-    }
-  }, [foodId]);
 
   useEffect(() => {
     const getEntries = Object.entries(foodItem);
@@ -47,17 +71,59 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
 
     const noEmptyQuantArr = quantArr.filter((quant) => quant && quant.trim());
     setQuantitiesArr(noEmptyQuantArr);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [foodItem]);
 
-  const handleStyle = (index) => {
-    const getElemment = document.getElementById(`${index}-ingredient-step`);
-    console.log('antes getElemment', getElemment.className);
-    if (getElemment.className === CHECKBOX_CLASS) {
-      getElemment.className = 'checked-ingredient-step';
-      return console.log('dentro getElemment', getElemment.className);
+  const handleLocalSave = (ingredient) => {
+    const getLocalSaved = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (getLocalSaved?.meals?.[foodId].includes(ingredient)) {
+      const filteredArr = getLocalSaved.meals[foodId]
+        .filter((item) => item !== ingredient);
+      setLocalSaved({
+        ...getLocalSaved,
+        meals: {
+          ...getLocalSaved.meals,
+          [foodId]: [...filteredArr],
+        },
+      });
+      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+        ...getLocalSaved,
+        meals: {
+          ...getLocalSaved.meals,
+          [foodId]: [...filteredArr],
+        },
+      }));
     }
-    getElemment.className = CHECKBOX_CLASS;
-    return console.log('dentro getElemment', getElemment.className);
+    const tempItem = getLocalSaved.meals?.[foodId];
+    setLocalSaved({
+      ...getLocalSaved,
+      meals: {
+        ...getLocalSaved.meals,
+        [foodId]: [...tempItem, ingredient],
+      },
+    });
+    return localStorage.setItem('inProgressRecipes', JSON.stringify({
+      ...getLocalSaved,
+      meals: {
+        ...getLocalSaved.meals,
+        [foodId]: [...tempItem, ingredient],
+      },
+    }));
+  };
+
+  useEffect(() => {
+    if (localSaved?.meals?.[foodId]?.length === ingredientsArray.length) {
+      return setIsDisabled(false);
+    }
+    setIsDisabled(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localSaved, ingredientsArray]);
+
+  const handleStyle = (ingredient) => {
+    if (localSaved.meals?.[foodId].includes(ingredient)) {
+      return { textDecoration: 'line-through' };
+    }
   };
 
   return (
@@ -82,23 +148,14 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
             width="250px"
           />
           <div>
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => { } }
-            >
-              Compartilhar
-            </button>
-            <button
-              type="button"
-              data-testid="favorite-btn"
-              onClick={ () => { } }
-            >
-              Favoritar
-            </button>
+            <ShareButton
+              pathname={ `/foods/${pathname.split('/')[2]}` }
+              testId="share-btn"
+            />
+            <FavoriteButton foodId={ foodId } />
           </div>
-          <div>
-            <h3>Ingredientes</h3>
+          <h3>Ingredientes</h3>
+          <div data-testid="ingredient-box">
             {
               ingredientsArray
                 .map((ingredient, index) => (
@@ -108,11 +165,16 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
                         data-testid={ `${index}-ingredient-step` }
                         id={ `${index}-ingredient-step` }
                         className={ CHECKBOX_CLASS }
+                        style={ handleStyle(ingredient) }
                       >
                         <input
                           type="checkbox"
                           name={ `${index}-ingredient-step` }
-                          onChange={ () => handleStyle(index) }
+                          data-testid={ `${index}-ingredient-checkbox` }
+                          onClick={ () => {
+                            handleLocalSave(ingredient);
+                          } }
+                          checked={ localSaved.meals?.[foodId].includes(ingredient) }
                         />
                         {` ${ingredient}: ${quantitiesArr[index]}`}
                       </p>
@@ -129,9 +191,10 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
           <button
             type="button"
             data-testid="finish-recipe-btn"
-            onClick={ () => { } }
+            onClick={ () => history.push('/done-recipes') }
+            disabled={ isDisabled }
           >
-            Finalizar Receita
+            Finish Recipe
           </button>
 
         </div>
@@ -140,10 +203,4 @@ const FoodDetailsComponent = ({ location: { pathname } }) => {
   );
 };
 
-FoodDetailsComponent.propTypes = {
-  location: shape({
-    pathname: string.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(FoodDetailsComponent);
+export default FoodDetailsComponent;

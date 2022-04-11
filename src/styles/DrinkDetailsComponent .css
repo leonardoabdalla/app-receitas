@@ -6,7 +6,11 @@
   list-style-type: none;
   overflow: auto;
   padding-left: 10px;
+<<<<<<< HEAD
   width: 70%;
+=======
+  width: 68%;
+>>>>>>> f10d561e5107dbc7bc409dfafad903cba2466b46
 }
 
 li {

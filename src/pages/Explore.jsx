@@ -1,11 +1,12 @@
 import React from 'react';
-import { shape, func } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import '../css/Explore.css';
 
-function Explore({ history }) {
+function Explore() {
+  const history = useHistory();
+
   const handleClickExploreFoods = () => {
     history.push('/explore/foods');
   };
@@ -41,10 +42,4 @@ function Explore({ history }) {
   );
 }
 
-Explore.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(Explore);
+export default Explore;

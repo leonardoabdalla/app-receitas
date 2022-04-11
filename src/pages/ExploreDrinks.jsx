@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 
-function ExploreDrinks({ history }) {
+function ExploreDrinks() {
   const api = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-  const [drinksId, setDrinksId] = useState('');
-  useEffect(() => {
-    const fetchDrinks = async () => {
-      const { drinks } = await fetch(api).then((response) => response.json());
-      setDrinksId(drinks[0].idDrink);
-    };
-    fetchDrinks();
-  }, []);
+  const history = useHistory();
 
   const handleClickByIngredient = () => {
     history.push('/explore/drinks/ingredients');
   };
 
-  const handleClickSurprise = () => {
-    history.push(`/drinks/${drinksId}`);
+  const handleClickSurprise = async () => {
+    const { drinks } = await fetch(api).then((response) => response.json());
+    history.push(`/drinks/${drinks[0].idDrink}`);
   };
   return (
     <div>
@@ -48,10 +41,5 @@ function ExploreDrinks({ history }) {
   );
 }
 
-ExploreDrinks.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
 //
-export default withRouter(ExploreDrinks);
+export default ExploreDrinks;

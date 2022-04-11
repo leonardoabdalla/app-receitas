@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { func, shape, string } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchFoodById, fetchDrinks } from '../api/services';
 import '../styles/FoodDetailsComponent.css';
 import ShareButton from './ShareButton';
@@ -9,36 +8,33 @@ import StartContinueButton from './StartContinueButton';
 import '../css/Details.css';
 import '../styles/DrinkDetailsComponent .css';
 
-const FoodDetailsComponent = ({ location: { pathname }, history }) => {
-  const [foodId, setFoodId] = useState('');
+const FoodDetailsComponent = () => {
   const [foodItem, setFoodItem] = useState({});
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArr, setQuantitiesArr] = useState([]);
   const [recomendedDrinks, setRecomendedDrinks] = useState([{}]);
 
+  const history = useHistory();
+  const { location: { pathname } } = history;
+
   const SHOW_RECOMMENDED = 6;
 
   useEffect(() => {
     const getPathId = pathname.split('/')[2];
-    setFoodId(getPathId);
     const getRecomendedDrinks = async () => {
       const getDrinks = await fetchDrinks();
       return setRecomendedDrinks(getDrinks);
     };
     getRecomendedDrinks();
 
+    const getFoodById = async () => {
+      const getFood = await fetchFoodById(getPathId);
+      return setFoodItem(getFood[0]);
+    };
+    getFoodById();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (foodId) {
-      const getFoodById = async () => {
-        const getFood = await fetchFoodById(foodId);
-        return setFoodItem(getFood[0]);
-      };
-      getFoodById();
-    }
-  }, [foodId]);
 
   useEffect(() => {
     const getEntries = Object.entries(foodItem);
@@ -156,13 +152,4 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   );
 };
 
-FoodDetailsComponent.propTypes = {
-  location: shape({
-    pathname: string.isRequired,
-  }).isRequired,
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(FoodDetailsComponent);
+export default FoodDetailsComponent;

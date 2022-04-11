@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { func, shape } from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import ShareButton from './ShareButton';
 import '../styles/DoneRecipes.css';
 
-const DoneRecipesComponent = ({ history }) => {
+const DoneRecipesComponent = () => {
   const [arrayToRender, setArrayToRender] = useState([]);
   const [localSaved, setLocalSaved] = useState([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     const getLocalDone = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -15,12 +16,7 @@ const DoneRecipesComponent = ({ history }) => {
   }, []);
 
   const handleFilter = (filter) => {
-    const filterArr = localSaved.filter((item) => {
-      console.log('item.type', item.type);
-      console.log('filter', filter.toLowerCase());
-      return item.type === filter.toLowerCase();
-    });
-    console.log('filterArr', filterArr);
+    const filterArr = localSaved.filter((item) => item.type === filter.toLowerCase());
     return setArrayToRender(filterArr);
   };
 
@@ -58,6 +54,7 @@ const DoneRecipesComponent = ({ history }) => {
             onKeyDown={ () => history.push(`/${item.type}s/${item.id}`) }
             role="button"
             tabIndex={ index }
+            data-testid={ `${index}-horizontal-div` }
           >
             <img
               src={ item.image }
@@ -104,10 +101,4 @@ const DoneRecipesComponent = ({ history }) => {
   );
 };
 
-DoneRecipesComponent.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(DoneRecipesComponent);
+export default DoneRecipesComponent;

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 // Faz a copia
 const copy = require('clipboard-copy');
 
-function FavoriteRecipes({ history }) {
+function FavoriteRecipes() {
   const [isCopied, setIsCopied] = useState(false);
   const [arrayToRender, setArrayToRender] = useState([]);
   const [localSaved, setLocalSaved] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     const storage = () => {
@@ -49,7 +49,6 @@ function FavoriteRecipes({ history }) {
   return (
     <div>
       <Header />
-      <h1>Favorite Recipes</h1>
       <button
         type="button"
         name="filterFoods"
@@ -135,10 +134,4 @@ function FavoriteRecipes({ history }) {
   );
 }
 
-FavoriteRecipes.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(FavoriteRecipes);
+export default FavoriteRecipes;

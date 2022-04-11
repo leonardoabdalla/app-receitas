@@ -36,8 +36,6 @@ const FavoriteDrinkButton = ({ drinkId }) => {
       alcoholicOrNot: drinkItem.strAlcoholic,
       name: drinkItem.strDrink,
       image: drinkItem.strDrinkThumb,
-      /*      doneDate: drinkItem.dateModified,
-      tags: drinkItem.strTags || [], */
     });
   }, [drinkItem]);
 
@@ -50,6 +48,8 @@ const FavoriteDrinkButton = ({ drinkId }) => {
       const removeFavorite = localStorageItems
         .filter((favorite) => favorite.id !== drinkId);
       localStorage.setItem('favoriteRecipes', JSON.stringify(removeFavorite));
+      setLocalStorageItems(removeFavorite);
+      setIsFavorite(false);
     }
   };
 

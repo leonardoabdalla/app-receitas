@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import { shape, func } from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import '../css/Profile.css';
 
-function Profile({ history }) {
+function Profile() {
   const [email, setEmail] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
     const getLocalStorage = JSON.parse(localStorage.getItem('user'));
@@ -62,10 +62,4 @@ function Profile({ history }) {
   );
 }
 
-Profile.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(Profile);
+export default Profile;
