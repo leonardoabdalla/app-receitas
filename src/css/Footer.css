@@ -1,0 +1,28 @@
+.footer {
+  align-items: center;
+  background-color: rgb(175, 149, 187);
+  border-radius: 10px 10px 0 0;
+  bottom: 0;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+}
+
+.footer button {
+  background-color: rgb(240, 240, 240);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 5px 5px 0 rgb(155, 131, 155);
+  height: 50px;
+  width: 50px;
+}
+
+.footer nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+.footer nav a button {
+  height: 70px;
+  width: 70px;
+}

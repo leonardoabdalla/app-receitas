@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap') ;
+
+.details-page {
+  background-color: rgb(235, 226, 241);
+}
+
+.title {
+  color: rgb(71, 44, 78);
+  font-family: Poppins , sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.food-name {
+  color: rgb(65, 31, 75);
+  font-family: Poppins , sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+}
+
+.food-category {
+  color: rgb(107, 94, 109);
+  font-family: Poppins , sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.food-image {
+  margin-top: -8px;
+  position: relative;
+  width: 370px;
+}
+
+.buttons-image {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 260px;
+}
+
+.buttons-image button {
+  background-color: rgb(251, 243, 255);
+  border: none;
+  padding: 5px;
+}
+
+.buttons-image button img {
+  width: 40px;
+}
+
+.ingredients-div {
+  background-color: rgb(251, 243, 255);
+  border-radius: 30px 30px 0 0;
+  color: rgb(82, 82, 82);
+  display: flex;
+  flex-direction: column;
+  font-family: Poppins , sans-serif;
+  font-size: 16px;
+  margin-top: -20px;
+  padding: 20px;
+  width: 370px;
+}
+
+.ingredients-div h4 {
+  color: rgb(89, 55, 99);
+  font-size: 23px;
+  font-weight: 600;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.ingredients-div p {
+  color: rgb(112, 109, 109);
+  display: flex;
+  justify-content: center;
+}
+
+.instructions {
+  background-color: rgb(251, 243, 255);
+  color: rgba(112, 109, 109, 0.568);
+  font-family: Poppins , sans-serif;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.video {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.start-recipe-button {
+  background-color: rgb(89, 31, 97);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 8px 0 rgb(163, 154, 165);
+  color: aliceblue;
+  font-weight: 600;
+  height: 50px;
+  padding: 2px;
+  width: 140px;
+}

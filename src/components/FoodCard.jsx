@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import MyContext from '../context/MyContext';
+import '../css/Cards.css';
 
 const FoodCard = ({ history }) => {
   const [arrayToRender, setArrayToRender] = useState([]);
@@ -12,8 +13,7 @@ const FoodCard = ({ history }) => {
   [isFiltered, filteredFoods, foods]);
 
   return (
-    <>
-      <h2>Render Foods</h2>
+    <div className="card">
       {arrayToRender && arrayToRender.map((meal, index) => {
         const SHOW_ITEMS = 11;
         if (index > SHOW_ITEMS) return null;
@@ -41,7 +41,7 @@ const FoodCard = ({ history }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 

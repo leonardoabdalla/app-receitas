@@ -13,7 +13,7 @@ const NationalitiesCard = ({ history }) => {
 
   const SHOW_ITEMS = 12;
   return (
-    <>
+    <div className="card">
       <h2>Render Nationalities</h2>
       {arrayToRender && arrayToRender.slice(0, SHOW_ITEMS).map((meal, index) => (
         <div
@@ -38,7 +38,7 @@ const NationalitiesCard = ({ history }) => {
           </h3>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

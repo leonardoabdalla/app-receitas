@@ -4,6 +4,7 @@ import { shape, func } from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchComponent from './SearchComponent';
+import '../css/Header.css';
 
 const Header = ({ history: { location } }) => {
   const [isHidden, setIsHidden] = useState(false);

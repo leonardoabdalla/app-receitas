@@ -1,0 +1,15 @@
+.explore-page {
+  padding: 20px;
+}
+
+.button-profile {
+  background-color: rgb(115, 57, 122);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 8px 0 rgb(179, 175, 180);
+  color: aliceblue;
+  font-weight: 600;
+  margin: 8px;
+  padding: 8px;
+  width: fit-content;
+}

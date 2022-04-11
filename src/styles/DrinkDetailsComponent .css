@@ -6,7 +6,7 @@
   list-style-type: none;
   overflow: auto;
   padding-left: 10px;
-  width: 62%;
+  width: 70%;
 }
 
 li {
@@ -17,3 +17,4 @@ li {
   bottom: 0;
   position: fixed;
 }
+

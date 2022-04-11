@@ -9,6 +9,7 @@ import { fetchFoodByIngredient,
   fetchDrinkByName,
   fetchDrinkByFirstLetter,
 } from '../api/services';
+import '../css/SearchComponent.css';
 
 const SearchComponent = ({ history: { location }, history }) => {
   const {
@@ -116,9 +117,10 @@ const SearchComponent = ({ history: { location }, history }) => {
   };
 
   return (
-    <div>
+    <div className="search-div">
       <input
         placeholder="Search..."
+        className="search-input"
         type="text"
         id="searchInput"
         name="searchInput"

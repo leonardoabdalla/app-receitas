@@ -6,6 +6,8 @@ import '../styles/FoodDetailsComponent.css';
 import ShareButton from './ShareButton';
 import FavoriteButton from './FavoriteButton';
 import StartContinueButton from './StartContinueButton';
+import '../css/Details.css';
+import '../styles/DrinkDetailsComponent .css';
 
 const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   const [foodId, setFoodId] = useState('');
@@ -60,31 +62,40 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
   }, [foodItem]);
 
   return (
-    <>
-      <h1>Food Details</h1>
+    <div className="details-page">
       <div>
-        <h2
-          data-testid="recipe-title"
-        >
-          {foodItem.strMeal}
-        </h2>
-        <h3
-          data-testid="recipe-category"
-        >
-          {foodItem.strCategory}
-        </h3>
         <img
+          className="food-image"
           data-testid="recipe-photo"
           src={ foodItem.strMealThumb }
           alt={ `Meal: ${foodItem.strMeal}` }
           width="250px"
         />
-        <div>
-          <ShareButton pathname={ pathname } testId="share-btn" />
-          <FavoriteButton foodId={ pathname.split('/')[2] } />
-        </div>
-        <div>
-          <h3>Ingredientes</h3>
+        <div className="ingredients-div">
+          <div className="buttons-image">
+            <ShareButton
+              pathname={ pathname }
+              testId="share-btn"
+              className="buttons-favorite"
+            />
+            <FavoriteButton
+              className="buttons-favorite"
+              foodId={ pathname.split('/')[2] }
+            />
+          </div>
+          <h2
+            className="food-name"
+            data-testid="recipe-title"
+          >
+            {foodItem.strMeal}
+          </h2>
+          <h3
+            className="food-category"
+            data-testid="recipe-category"
+          >
+            {foodItem.strCategory}
+          </h3>
+          <h4 className="ingredients">Ingredients</h4>
           {
             ingredientsArray
               .map((ingredient, index) => (
@@ -96,48 +107,52 @@ const FoodDetailsComponent = ({ location: { pathname }, history }) => {
                 </p>
               ))
           }
-        </div>
-        <p
-          data-testid="instructions"
-        >
-          {foodItem.strInstructions}
-        </p>
-        <iframe
-          data-testid="video"
-          title={ foodItem.strMeal }
-          width="300px"
-          height="200px"
-          src={ foodItem.strYoutube?.replace('watch', 'embed') }
-        />
-        <ul>
-          {recomendedDrinks.slice(0, SHOW_RECOMMENDED).map((drink, index) => (
-            <li
-              className="recommended-card"
-              data-testid={ `${index}-recomendation-card` }
-              key={ index }
-            >
-              <button
-                onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
-                type="button"
-              >
-                <img
-                  src={ drink.strDrinkThumb }
-                  alt={ drink.strDrink }
-                  width="100px"
-                />
-                <h3
-                  data-testid={ `${index}-recomendation-title` }
-                >
-                  { drink.strDrink }
 
-                </h3>
-              </button>
-            </li>
-          ))}
-        </ul>
-        <StartContinueButton foodId={ pathname.split('/')[2] } />
+          <p
+            className="instructions"
+            data-testid="instructions"
+          >
+            {foodItem.strInstructions}
+          </p>
+          <div className="video">
+            <iframe
+              data-testid="video"
+              title={ foodItem.strMeal }
+              width="300px"
+              height="200px"
+              src={ foodItem.strYoutube?.replace('watch', 'embed') }
+            />
+          </div>
+          <ul className="recommended-box">
+            {recomendedDrinks.slice(0, SHOW_RECOMMENDED).map((drink, index) => (
+              <li
+                className="recommended-card"
+                data-testid={ `${index}-recomendation-card` }
+                key={ index }
+              >
+                <button
+                  onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
+                  type="button"
+                >
+                  <img
+                    src={ drink.strDrinkThumb }
+                    alt={ drink.strDrink }
+                    width="100px"
+                  />
+                  <h3
+                    data-testid={ `${index}-recomendation-title` }
+                  >
+                    { drink.strDrink }
+
+                  </h3>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <StartContinueButton className="button-start" foodId={ pathname.split('/')[2] } />
       </div>
-    </>
+    </div>
   );
 };
 

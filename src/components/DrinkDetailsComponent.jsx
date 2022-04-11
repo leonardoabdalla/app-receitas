@@ -6,6 +6,7 @@ import '../styles/DrinkDetailsComponent .css';
 import ShareButton from './ShareButton';
 import FavoriteDrinkButton from './FavoriteDrinkButton';
 import StartDrinkButton from './StartDrinkButton';
+import '../css/Details.css';
 
 const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   const [drinkItem, setDrinkItem] = useState([{}]);
@@ -50,32 +51,41 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
   }, [drinkItem]);
 
   return (
-    <>
-      <h1>Drink Details</h1>
+    <div className="details-page">
       { drinkItem && (
         <div>
-          <h2
-            data-testid="recipe-title"
-          >
-            {drinkItem.strDrink}
-          </h2>
-          <h3
-            data-testid="recipe-category"
-          >
-            {`${drinkItem.strCategory} - ${drinkItem.strAlcoholic}`}
-          </h3>
           <img
+            className="food-image"
             data-testid="recipe-photo"
             src={ drinkItem.strDrinkThumb }
             alt={ `Drink: ${drinkItem.strDrink}` }
             width="250px"
           />
-          <div>
-            <ShareButton pathname={ pathname } testId="share-btn" />
-            <FavoriteDrinkButton drinkId={ pathname.split('/')[2] } />
-          </div>
-          <div>
-            <h3>Ingredientes</h3>
+          <div className="ingredients-div">
+            <div className="buttons-image">
+              <ShareButton
+                className="buttons-favorite"
+                pathname={ pathname }
+                testId="share-btn"
+              />
+              <FavoriteDrinkButton
+                drinkId={ pathname.split('/')[2] }
+                className="buttons-favorite"
+              />
+            </div>
+            <h2
+              className="food-name"
+              data-testid="recipe-title"
+            >
+              {drinkItem.strDrink}
+            </h2>
+            <h3
+              className="food-category"
+              data-testid="recipe-category"
+            >
+              {`${drinkItem.strCategory} - ${drinkItem.strAlcoholic}`}
+            </h3>
+            <h4 className="ingredients">Ingredients</h4>
             {
               ingredientsArray
                 .map((ingredient, index) => (
@@ -87,43 +97,45 @@ const DrinkDetailComponent = ({ location: { pathname }, history }) => {
                   </p>
                 ))
             }
-          </div>
-          <p
-            data-testid="instructions"
-          >
-            {drinkItem.strInstructions}
-          </p>
-          <ul className="recommended-box">
-            {recommendedFoods && recommendedFoods.map((food, index) => {
-              const SHOW_RECOMMENDED = 5;
-              if (index > SHOW_RECOMMENDED) return null;
-              return (
-                <li
-                  data-testid={ `${index}-recomendation-card` }
-                  key={ index }
-                >
-                  <div
-                    onClick={ () => history.push(`/foods/${food.idMeal}`) }
-                    onKeyDown={ () => history.push(`/foods/${food.idMeal}`) }
-                    role="button"
-                    tabIndex={ index }
-                  >
-                    <img src={ food.strMealThumb } alt={ food.strMeal } width="100px" />
-                    <h3
-                      data-testid={ `${index}-recomendation-title` }
-                    >
-                      { food.strMeal }
 
-                    </h3>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-          <StartDrinkButton drinkId={ pathname.split('/')[2] } />
+            <p
+              className="instructions"
+              data-testid="instructions"
+            >
+              {drinkItem.strInstructions}
+            </p>
+            <ul className="recommended-box">
+              {recommendedFoods && recommendedFoods.map((food, index) => {
+                const SHOW_RECOMMENDED = 5;
+                if (index > SHOW_RECOMMENDED) return null;
+                return (
+                  <li
+                    data-testid={ `${index}-recomendation-card` }
+                    key={ index }
+                  >
+                    <button
+                      onClick={ () => history.push(`/foods/${food.idMeal}`) }
+                      /* onKeyDown={ () => history.push(`/foods/${food.idMeal}`) } */
+                      type="button"
+                    /* tabIndex={ index } */
+                    >
+                      <img src={ food.strMealThumb } alt={ food.strMeal } width="100px" />
+                      <h3
+                        data-testid={ `${index}-recomendation-title` }
+                      >
+                        { food.strMeal }
+
+                      </h3>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <StartDrinkButton className="button-start" drinkId={ pathname.split('/')[2] } />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

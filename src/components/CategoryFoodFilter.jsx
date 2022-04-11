@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 import { fetchFoodCategories, fetchFilteredFoods } from '../api/services';
+import '../css/Category.css';
 
 const CategoryFoodFilter = () => {
   const [categories, setCategories] = useState([]);
@@ -36,8 +37,7 @@ const CategoryFoodFilter = () => {
   };
 
   return (
-    <>
-      <h2>Filters</h2>
+    <div className="categories">
       <div key="All">
         <button
           type="button"
@@ -70,7 +70,7 @@ const CategoryFoodFilter = () => {
           </div>
         );
       })}
-    </>
+    </div>
 
   );
 };
