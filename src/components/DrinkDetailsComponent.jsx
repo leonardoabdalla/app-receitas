@@ -54,6 +54,7 @@ const DrinkDetailComponent = () => {
 
   return (
     <div className="details-page">
+      <h1>Drink Details</h1>
       { drinkItem && (
         <div>
           <img

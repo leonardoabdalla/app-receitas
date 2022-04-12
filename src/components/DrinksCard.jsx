@@ -14,6 +14,7 @@ const DrinksCard = () => {
 
   return (
     <div className="card">
+      <h2>Render Drinks</h2>
       {arrayToRender && arrayToRender.map((drink, index) => {
         const SHOW_ITEMS = 11;
         if (index > SHOW_ITEMS) return null;
