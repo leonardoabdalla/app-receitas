@@ -11,6 +11,7 @@ const DrinkDetailComponent = () => {
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArray, setQuantitiesArray] = useState([]);
   const [recommendedFoods, setRecommendedFoods] = useState([{}]);
+  const SHOW_RECOMMENDED = 6;
 
   const history = useHistory();
   const { location: { pathname } } = history;
@@ -96,31 +97,26 @@ const DrinkDetailComponent = () => {
             {drinkItem.strInstructions}
           </p>
           <ul className="recommended-box">
-            {recommendedFoods && recommendedFoods.map((food, index) => {
-              const SHOW_RECOMMENDED = 5;
-              if (index > SHOW_RECOMMENDED) return null;
-              return (
-                <li
-                  data-testid={ `${index}-recomendation-card` }
-                  key={ index }
+            {recommendedFoods.slice(0, SHOW_RECOMMENDED).map((food, index) => (
+              <li
+                data-testid={ `${index}-recomendation-card` }
+                key={ index }
+              >
+                <button
+                  onClick={ () => history.push(`/foods/${food.idMeal}`) }
+                  type="button"
+                  data-testid={ `${index}-recomendation-button` }
                 >
-                  <button
-                    onClick={ () => history.push(`/foods/${food.idMeal}`) }
-                    /* onKeyDown={ () => history.push(`/foods/${food.idMeal}`) } */
-                    type="button"
-                    /* tabIndex={ index } */
+                  <img src={ food.strMealThumb } alt={ food.strMeal } width="100px" />
+                  <h3
+                    data-testid={ `${index}-recomendation-title` }
                   >
-                    <img src={ food.strMealThumb } alt={ food.strMeal } width="100px" />
-                    <h3
-                      data-testid={ `${index}-recomendation-title` }
-                    >
-                      { food.strMeal }
+                    { food.strMeal }
 
-                    </h3>
-                  </button>
-                </li>
-              );
-            })}
+                  </h3>
+                </button>
+              </li>
+            ))}
           </ul>
           <StartDrinkButton drinkId={ pathname.split('/')[2] } />
         </div>

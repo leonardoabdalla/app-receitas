@@ -17,13 +17,11 @@ const FoodCard = () => {
     <>
       <h2>Render Foods</h2>
       {arrayToRender && arrayToRender.slice(0, SHOW_ITEMS).map((meal, index) => (
-        <div
+        <button
+          type="button"
           key={ `${meal.idMeal}` }
           data-testid={ `${index}-recipe-card` }
           onClick={ () => history.push(`/foods/${meal.idMeal}`) }
-          onKeyDown={ () => history.push(`/foods/${meal.idMeal}`) }
-          role="button"
-          tabIndex={ index }
         >
 
           <img
@@ -37,7 +35,7 @@ const FoodCard = () => {
           >
             {meal.strMeal}
           </h3>
-        </div>
+        </button>
       ))}
     </>
   );
