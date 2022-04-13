@@ -55,6 +55,7 @@ const FavoriteDrinkButton = ({ drinkId }) => {
 
   return (
     <button
+      className="buttons-favorite"
       type="button"
       data-testid="favorite-btn"
       onClick={ () => { setIsFavorite(!isFavorite); handleLocalSave(); } }

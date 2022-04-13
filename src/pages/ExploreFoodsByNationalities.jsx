@@ -3,6 +3,7 @@ import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import NationalitiesCard from '../components/NationalitiesCard';
 import MyContext from '../context/MyContext';
+import '../css/Nationalities.css';
 
 function ExploreFoodsByNationalities() {
   const [nationalities, setNationalities] = useState([]);
@@ -50,6 +51,7 @@ function ExploreFoodsByNationalities() {
       <Header />
       <label htmlFor="nationalities">
         <select
+          className="option-nacionalities"
           id="nationalities"
           name="nationalities"
           data-testid="explore-by-nationality-dropdown"

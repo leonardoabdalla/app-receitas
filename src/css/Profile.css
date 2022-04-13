@@ -1,0 +1,28 @@
+.email-profile {
+  background-color: rgb(210, 197, 216);
+  border-radius: 8px;
+  color: rgb(54, 54, 54);
+  font-family: Poppins , sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 auto;
+  padding: 8px;
+  text-align: center;
+  width: fit-content;
+}
+
+.profile {
+  padding: 20px;
+}
+
+.button-profile {
+  background-color: rgb(115, 57, 122);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 8px 0 rgb(144, 141, 145);
+  color: aliceblue;
+  font-weight: 600;
+  margin: 8px;
+  padding: 8px;
+  width: fit-content;
+}

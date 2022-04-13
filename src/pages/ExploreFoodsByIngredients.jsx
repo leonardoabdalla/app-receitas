@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import MyContext from '../context/MyContext';
-import NationalitiesCard from '../components/NationalitiesCard';
+import '../css/Explore.css';
 
 function ExploreFoodsByIngredients() {
   const { exploreFoodsByIngredients } = useContext(MyContext);
@@ -27,7 +27,7 @@ function ExploreFoodsByIngredients() {
   return (
     <>
       <Header />
-      <div>
+      <div className="card">
         {
           ingredients.slice(0, maxVisibleIng).map((ingredient, index) => (
             <div
@@ -51,8 +51,8 @@ function ExploreFoodsByIngredients() {
             </div>
           ))
         }
-        <NationalitiesCard />
       </div>
+      {/* <NationalitiesCard /> */}
       <FooterComponent />
     </>
   );

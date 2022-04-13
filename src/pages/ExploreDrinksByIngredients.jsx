@@ -26,7 +26,7 @@ function ExploreDrinksByIngredients() {
   return (
     <>
       <Header />
-      <div>
+      <div className="card">
         {
           ingredients.slice(0, maxVisibleIng).map((ingredient, index) => (
             <div

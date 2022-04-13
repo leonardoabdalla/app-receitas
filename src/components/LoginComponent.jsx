@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import '../css/Login.css';
+import loginLogo from '../images/loginLogo.png';
 
 const LoginComponent = () => {
   const [inputEmail, setInputEmail] = useState('');
@@ -27,29 +29,33 @@ const LoginComponent = () => {
   };
 
   return (
-    <>
-      <h1>Login</h1>
-      <input
-        type="email"
-        onChange={ ({ target }) => setInputEmail(target.value) }
-        data-testid="email-input"
-        placeholder="email"
-      />
-      <input
-        type="password"
-        onChange={ ({ target }) => setInputPassword(target.value) }
-        data-testid="password-input"
-        placeholder="senha"
-      />
-      <button
-        type="button"
-        onClick={ () => handleSubmit() }
-        data-testid="login-submit-btn"
-        disabled={ isDisabled }
-      >
-        Enter
-      </button>
-    </>
+    <div className="blue-background">
+      <img src={ loginLogo } alt="Um prato" className="food-logo" />
+      <h1 className="logo">All Delicious</h1>
+      <div className="login-page">
+        <h1 className="login-title">Login</h1>
+        <input
+          type="email"
+          onChange={ ({ target }) => setInputEmail(target.value) }
+          data-testid="email-input"
+          placeholder="email"
+        />
+        <input
+          type="password"
+          onChange={ ({ target }) => setInputPassword(target.value) }
+          data-testid="password-input"
+          placeholder="senha"
+        />
+        <button
+          type="button"
+          onClick={ () => handleSubmit() }
+          data-testid="login-submit-btn"
+          disabled={ isDisabled }
+        >
+          Enter
+        </button>
+      </div>
+    </div>
 
   );
 };

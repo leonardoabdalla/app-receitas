@@ -1,0 +1,9 @@
+.option-nacionalities {
+  background-color: white;
+  border: none;
+  box-shadow: 0 5px 5px 0 rgb(214, 214, 214);
+  font-family: Poppins , sans-serif;
+  margin: 10px;
+  padding: 5px;
+  width: 200px;
+}

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import MyContext from '../context/MyContext';
+import '../css/Cards.css';
 
 const DrinksCard = () => {
   const [arrayToRender, setArrayToRender] = useState([]);
@@ -14,27 +15,30 @@ const DrinksCard = () => {
 
   return (
     <>
-      <h2>Render Drinks</h2>
-      {arrayToRender && arrayToRender.slice(0, SHOW_ITEMS).map((drink, index) => (
-        <button
-          type="button"
-          key={ `${drink.idDrink}` }
-          data-testid={ `${index}-recipe-card` }
-          onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
-        >
-          <img
-            src={ `${drink.strDrinkThumb}` }
-            alt={ `${drink.strDrink}` }
-            data-testid={ `${index}-card-img` }
-            width="100px"
-          />
-          <h3
-            data-testid={ `${index}-card-name` }
+      <h2 className="title-card">Render Drinks</h2>
+      <div className="card">
+        {arrayToRender && arrayToRender.slice(0, SHOW_ITEMS).map((drink, index) => (
+          <button
+            type="button"
+            key={ `${drink.idDrink}` }
+            data-testid={ `${index}-recipe-card` }
+            onClick={ () => history.push(`/drinks/${drink.idDrink}`) }
           >
-            {drink.strDrink}
-          </h3>
-        </button>
-      ))}
+            <img
+              src={ `${drink.strDrinkThumb}` }
+              alt={ `${drink.strDrink}` }
+              data-testid={ `${index}-card-img` }
+              width="100px"
+            />
+            <h3
+              data-testid={ `${index}-card-name` }
+            >
+              {drink.strDrink}
+            </h3>
+          </button>
+        ))}
+      </div>
+
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import MyContext from '../context/MyContext';
 import { fetchDrinksCategories, fetchFilteredDrinks } from '../api/services';
+import '../css/Category.css';
 
 const CategoryDrinkFilter = () => {
   const [categories, setCategories] = useState([]);
@@ -37,7 +38,7 @@ const CategoryDrinkFilter = () => {
   };
 
   return (
-    <>
+    <div className="categories">
       <div>
         <button
           type="button"
@@ -51,29 +52,27 @@ const CategoryDrinkFilter = () => {
           All
         </button>
       </div>
-      <div>
-        {categories.map((category, index) => {
-          const SHOW_CATEGORIES = 4;
-          if (index > SHOW_CATEGORIES) return null;
+      {categories.map((category, index) => {
+        const SHOW_CATEGORIES = 4;
+        if (index > SHOW_CATEGORIES) return null;
 
-          return (
-            <div key={ category.strCategory }>
-              <button
-                type="button"
-                name={ `${category.strCategory}` }
-                data-testid={ `${category.strCategory}-category-filter` }
-                onClick={ (e) => {
-                  updateDrinkCategoryFilter(category.strCategory);
-                  handleIsFiltered(e);
-                } }
-              >
-                {category.strCategory}
-              </button>
-            </div>
-          );
-        })}
-      </div>
-    </>
+        return (
+          <div key={ category.strCategory }>
+            <button
+              type="button"
+              name={ `${category.strCategory}` }
+              data-testid={ `${category.strCategory}-category-filter` }
+              onClick={ (e) => {
+                updateDrinkCategoryFilter(category.strCategory);
+                handleIsFiltered(e);
+              } }
+            >
+              {category.strCategory}
+            </button>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

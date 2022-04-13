@@ -13,6 +13,7 @@ const ShareButton = ({ pathname, testId }) => {
       data-testid={ testId }
       onClick={ () => { copy(`http://localhost:3000${pathname}`); setIsCopied(true); } }
       src={ shareIcon }
+      className="buttons-favorite"
     >
       { !isCopied ? (
         <img

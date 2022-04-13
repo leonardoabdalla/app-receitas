@@ -126,38 +126,42 @@ const DrinkInProgressComponent = () => {
 
   return (
     <>
-      <h1>Drink In Progress</h1>
+      <h1 className="title-card">Drink In Progress</h1>
       {drinkItem && (
-        <div>
-          <h2
-            data-testid="recipe-title"
-          >
-            {drinkItem.strDrink}
-          </h2>
-          <h3
-            data-testid="recipe-category"
-          >
-            {drinkItem.strCategory}
-          </h3>
+        <div className="details-page">
           <img
+            className="food-image"
             data-testid="recipe-photo"
             src={ drinkItem.strDrinkThumb }
             alt={ `Meal: ${drinkItem.strDrink}` }
             width="250px"
           />
-          <div>
-            <ShareButton
-              pathname={ `/drinks/${pathname.split('/')[2]}` }
-              testId="share-btn"
-            />
-            <FavoriteDrinkButton drinkId={ pathname.split('/')[2] } />
-          </div>
-          <div>
-            <h3>Ingredientes</h3>
+          <div className="ingredients-div">
+            <div className="buttons-image">
+              <ShareButton
+                pathname={ `/drinks/${pathname.split('/')[2]}` }
+                testId="share-btn"
+              />
+              <FavoriteDrinkButton drinkId={ pathname.split('/')[2] } />
+            </div>
+            <h2
+              className="food-name"
+              data-testid="recipe-title"
+            >
+              {drinkItem.strDrink}
+            </h2>
+            <h3
+              className="food-category"
+              data-testid="recipe-category"
+            >
+              {drinkItem.strCategory}
+            </h3>
+
+            <h4 className="ingredients">Ingredientes</h4>
             {
               ingredientsArray
                 .map((ingredient, index) => (
-                  <div key={ index }>
+                  <div key={ index } className="ingredients-check">
                     <label htmlFor={ `${index}-ingredient-step` }>
                       <p
                         data-testid={ `${index}-ingredient-step` }
@@ -178,21 +182,23 @@ const DrinkInProgressComponent = () => {
                   </div>
                 ))
             }
-          </div>
-          <p
-            data-testid="instructions"
-          >
-            {drinkItem.strInstructions}
-          </p>
-          <button
-            type="button"
-            data-testid="finish-recipe-btn"
-            onClick={ () => history.push('/done-recipes') }
-            disabled={ isDisabled }
-          >
-            Finish Recipe
-          </button>
 
+            <p
+              data-testid="instructions"
+            >
+              {drinkItem.strInstructions}
+            </p>
+
+            <button
+              type="button"
+              data-testid="finish-recipe-btn"
+              onClick={ () => history.push('/done-recipes') }
+              disabled={ isDisabled }
+              className="finish-button"
+            >
+              Finish Recipe
+            </button>
+          </div>
         </div>
       )}
     </>

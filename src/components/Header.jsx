@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchComponent from './SearchComponent';
+import '../css/Header.css';
 
 const Header = () => {
   const [isHidden, setIsHidden] = useState(false);

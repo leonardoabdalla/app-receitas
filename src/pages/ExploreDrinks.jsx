@@ -18,20 +18,24 @@ function ExploreDrinks() {
   return (
     <div>
       <Header />
-      <button
-        type="button"
-        data-testid="explore-by-ingredient"
-        onClick={ () => handleClickByIngredient() }
-      >
-        By Ingredient
-      </button>
-      <button
-        type="button"
-        data-testid="explore-surprise"
-        onClick={ () => handleClickSurprise() }
-      >
-        Surprise me!
-      </button>
+      <div className="explore-page">
+        <button
+          className="button-profile"
+          type="button"
+          data-testid="explore-by-ingredient"
+          onClick={ () => handleClickByIngredient() }
+        >
+          By Ingredient
+        </button>
+        <button
+          className="button-profile"
+          type="button"
+          data-testid="explore-surprise"
+          onClick={ () => handleClickSurprise() }
+        >
+          Surprise me!
+        </button>
+      </div>
       <FooterComponent />
     </div>
   );
