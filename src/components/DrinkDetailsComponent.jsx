@@ -12,6 +12,7 @@ const DrinkDetailComponent = () => {
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [quantitiesArray, setQuantitiesArray] = useState([]);
   const [recommendedFoods, setRecommendedFoods] = useState([{}]);
+  const SHOW_RECOMMENDED = 6;
 
   const history = useHistory();
   const { location: { pathname } } = history;
@@ -54,7 +55,7 @@ const DrinkDetailComponent = () => {
 
   return (
     <div className="details-page">
-      <h1>Drink Details</h1>
+      <h1 className="title-card">Drink Details</h1>
       { drinkItem && (
         <div>
           <img
@@ -109,7 +110,6 @@ const DrinkDetailComponent = () => {
             </p>
             <ul className="recommended-box">
               {recommendedFoods && recommendedFoods.map((food, index) => {
-                const SHOW_RECOMMENDED = 5;
                 if (index > SHOW_RECOMMENDED) return null;
                 return (
                   <li

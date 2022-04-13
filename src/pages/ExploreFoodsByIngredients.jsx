@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import FooterComponent from '../components/FooterComponent';
 import Header from '../components/Header';
 import MyContext from '../context/MyContext';
-import NationalitiesCard from '../components/NationalitiesCard';
+import '../css/Explore.css';
 
 function ExploreFoodsByIngredients() {
   const { exploreFoodsByIngredients } = useContext(MyContext);
@@ -52,7 +52,7 @@ function ExploreFoodsByIngredients() {
           ))
         }
       </div>
-      <NationalitiesCard />
+      {/* <NationalitiesCard /> */}
       <FooterComponent />
     </>
   );

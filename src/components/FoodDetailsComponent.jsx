@@ -60,7 +60,7 @@ const FoodDetailsComponent = () => {
   return (
     <div className="details-page">
       <div>
-        <h1>Food Details</h1>
+        <h1 className="title-card">Food Details</h1>
         <img
           className="food-image"
           data-testid="recipe-photo"

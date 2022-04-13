@@ -1,7 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap') ;
 
+.title-card {
+  align-items: center;
+  color: rgb(74, 43, 83);
+  display: flex;
+  font-family: Poppins , sans-serif;
+  font-size: 25px;
+  justify-content: center;
+  padding: 5px;
+}
+
 .card {
   align-items: center;
+  border: none;
   display: flex;
   flex-flow: wrap;
   flex-direction: row;
@@ -10,7 +21,7 @@
   padding: 10px;
 }
 
-.card div {
+.card button {
   align-items: center;
   border: none;
 
@@ -24,13 +35,13 @@
   padding: 10px;
 }
 
-.card div img {
+.card button img {
   border-radius: 5px;
   margin: 0 auto;
   width: 120px;
 }
 
-.card div h3 {
+.card button h3 {
   color: rgb(3, 7, 30);
   font-family: Poppins , sans-serif;
   font-size: 20px;

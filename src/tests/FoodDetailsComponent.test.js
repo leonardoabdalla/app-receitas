@@ -7,6 +7,9 @@ import App from '../App';
 describe('Testes do componente <FoodDetailsComponent', () => {
   afterEach(() => cleanup);
 
+  const route = '/foods/52977';
+  const buttonTestId = 'start-recipe-btn';
+
   it('1 -  Testa se o componente e os cards de recomendação renderizaram.', async () => {
     renderWithRouter(
       <App />,
@@ -50,7 +53,7 @@ describe('Testes do componente <FoodDetailsComponent', () => {
       <App />,
     );
 
-    history.push('/foods/52977');
+    history.push(route);
 
     localStorage.clear();
 
@@ -110,12 +113,94 @@ describe('Testes do componente <FoodDetailsComponent', () => {
       <App />,
     );
 
-    history.push('/foods/52977');
+    history.push(route);
 
     const getIngredient = await screen.findByTestId('0-ingredient-name-and-measure');
     expect(getIngredient).toBeInTheDocument();
 
     const shareButton = screen.getByTestId('share-btn');
     expect(shareButton).toBeInTheDocument();
+
+    localStorage.clear();
+  });
+
+  it('5 - Testa se o botão "Start Recipe" não aparece', async () => {
+    const { history } = renderWithRouter(
+      <App />,
+    );
+
+    localStorage.setItem('doneRecipes', JSON.stringify(
+      [{
+        alcoholicOrNot: '',
+        category: 'Side',
+        id: '52977',
+        image: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+        name: 'Corba',
+        nationality: 'Turkish',
+        type: 'food',
+        doneDate: '',
+        tags: [],
+      },
+      {
+        alcoholicOrNot: '',
+        category: 'Side',
+        id: '53060',
+        image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
+        name: 'Burek',
+        nationality: 'Croatian',
+        type: 'food',
+        doneDate: '',
+        tags: [],
+      },
+      ],
+    ));
+
+    history.push(route);
+
+    const getStartButton = await screen.findByTestId(buttonTestId);
+    expect(getStartButton).not.toBeInTheDocument();
+
+    localStorage.clear();
+  });
+
+  it('6 - Testa se o texto "Continue Recipe" aparece', async () => {
+    const { history } = renderWithRouter(
+      <App />,
+    );
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(
+      { meals: { 52977: [] } },
+    ));
+
+    history.push(route);
+
+    const getStartButton = await screen.findByTestId(buttonTestId);
+    expect(getStartButton).toHaveTextContent('Continue Recipe');
+
+    userEvent.click(getStartButton);
+    const getTitle = await screen.findByText(/food in progress/i);
+    expect(getTitle).toBeInTheDocument();
+
+    localStorage.clear();
+  });
+
+  it('7 - Testa se redireciona para Drink In Progress', async () => {
+    const { history } = renderWithRouter(
+      <App />,
+    );
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(
+      { meals: { 52977: [] } },
+    ));
+
+    history.push(route);
+
+    const getStartButton = screen.getByTestId(buttonTestId);
+    userEvent.click(getStartButton);
+
+    const getTitle = await screen.findByText(/food in progress/i);
+    expect(getTitle).toBeInTheDocument();
+
+    localStorage.clear();
   });
 });

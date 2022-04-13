@@ -1,3 +1,29 @@
 .checked-ingredient-step {
   text-decoration: line-through;
 }
+
+.ingredients-check label {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.ingredients-check label p input {
+  height: 20px;
+  margin: auto;
+  margin-right: 5px;
+  width: 20px;
+}
+
+.finish-button {
+  background-color: rgb(89, 31, 97);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 8px 0 rgb(163, 154, 165);
+  color: aliceblue;
+  font-weight: 600;
+  height: 50px;
+  padding: 2px;
+  width: 140px;
+}

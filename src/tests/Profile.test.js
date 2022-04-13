@@ -3,18 +3,20 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Profile from '../pages/Profile';
+import App from '../App';
 
 describe('Teste a pagina <Profile />', () => {
+  const emailTestId = 'profile-email';
   it('Verifica se existe o elemento Profile', () => {
     renderWithRouter(<Profile />);
-    const profile = screen.getByTestId('profile-email');
+    const profile = screen.getByTestId(emailTestId);
     expect(profile).toBeInTheDocument();
   });
 
   it('Verifica se a pagina <Profile /> possui os elementos corretos', () => {
     renderWithRouter(<Profile />);
 
-    const profileEmail = screen.getByTestId('profile-email');
+    const profileEmail = screen.getByTestId(emailTestId);
     const profileprofileDoneBtn = screen.getByTestId('profile-done-btn');
     const profileFavoriteBtn = screen.getByTestId('profile-favorite-btn');
     const profilelogoutBtn = screen.getByTestId('profile-logout-btn');
@@ -59,9 +61,19 @@ describe('Teste a pagina <Profile />', () => {
     expect(pathname).toBe('/');
   });
 
-  it('Teste xxxxxxxxxxxx', () => {
-    renderWithRouter(<Profile />);
-    screen.findByText('email');
+  it('Testa se carrega o e-mail salvo no localStorage', async () => {
+    const { history } = renderWithRouter(
+      <App />,
+    );
+
+    localStorage.setItem('user', JSON.stringify({
+      email: 'test@test.com',
+    }));
+
+    history.push('/profile');
+
+    const getRenderedEmail = await screen.findByTestId(emailTestId);
+    expect(getRenderedEmail).toHaveTextContent('test@test.com');
   });
 });
 

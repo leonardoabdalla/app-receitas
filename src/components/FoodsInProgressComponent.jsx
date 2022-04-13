@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { fetchFoodById } from '../api/services';
 import '../styles/FoodsInProgressComponent.css';
+import '../styles/DrinkInProgressComponent.css';
 import ShareButton from './ShareButton';
 import FavoriteButton from './FavoriteButton';
 
@@ -128,38 +129,41 @@ const FoodDetailsComponent = () => {
 
   return (
     <>
-      <h1>Food In Progress</h1>
+      <h1 className="title-card">Food In Progress</h1>
       {foodItem && (
-        <div>
-          <h2
-            data-testid="recipe-title"
-          >
-            {foodItem.strMeal}
-          </h2>
-          <h3
-            data-testid="recipe-category"
-          >
-            {foodItem.strCategory}
-          </h3>
+        <div className="details-page">
           <img
+            className="food-image"
             data-testid="recipe-photo"
             src={ foodItem.strMealThumb }
             alt={ `Meal: ${foodItem.strMeal}` }
             width="250px"
           />
-          <div>
-            <ShareButton
-              pathname={ `/foods/${pathname.split('/')[2]}` }
-              testId="share-btn"
-            />
-            <FavoriteButton foodId={ foodId } />
-          </div>
-          <h3>Ingredientes</h3>
-          <div data-testid="ingredient-box">
+          <div className="ingredients-div" data-testid="ingredient-box">
+            <div className="buttons-image">
+              <ShareButton
+                pathname={ `/foods/${pathname.split('/')[2]}` }
+                testId="share-btn"
+              />
+              <FavoriteButton foodId={ foodId } />
+            </div>
+            <h2
+              className="food-name"
+              data-testid="recipe-title"
+            >
+              {foodItem.strMeal}
+            </h2>
+            <h3
+              className="food-category"
+              data-testid="recipe-category"
+            >
+              {foodItem.strCategory}
+            </h3>
+            <h4 className="ingredients">Ingredientes</h4>
             {
               ingredientsArray
                 .map((ingredient, index) => (
-                  <div key={ index }>
+                  <div className="ingredients-check" key={ index }>
                     <label htmlFor={ `${index}-ingredient-step` }>
                       <p
                         data-testid={ `${index}-ingredient-step` }
@@ -171,7 +175,7 @@ const FoodDetailsComponent = () => {
                           type="checkbox"
                           name={ `${index}-ingredient-step` }
                           data-testid={ `${index}-ingredient-checkbox` }
-                          onClick={ () => {
+                          onChange={ () => {
                             handleLocalSave(ingredient);
                           } }
                           checked={ localSaved.meals?.[foodId].includes(ingredient) }
@@ -182,21 +186,22 @@ const FoodDetailsComponent = () => {
                   </div>
                 ))
             }
-          </div>
-          <p
-            data-testid="instructions"
-          >
-            {foodItem.strInstructions}
-          </p>
-          <button
-            type="button"
-            data-testid="finish-recipe-btn"
-            onClick={ () => history.push('/done-recipes') }
-            disabled={ isDisabled }
-          >
-            Finish Recipe
-          </button>
 
+            <p
+              data-testid="instructions"
+            >
+              {foodItem.strInstructions}
+            </p>
+            <button
+              type="button"
+              data-testid="finish-recipe-btn"
+              onClick={ () => history.push('/done-recipes') }
+              disabled={ isDisabled }
+              className="finish-button"
+            >
+              Finish Recipe
+            </button>
+          </div>
         </div>
       )}
     </>

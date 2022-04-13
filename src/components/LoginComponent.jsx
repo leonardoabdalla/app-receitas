@@ -31,6 +31,7 @@ const LoginComponent = () => {
   return (
     <div className="blue-background">
       <img src={ loginLogo } alt="Um prato" className="food-logo" />
+      <h1 className="logo">All Delicious</h1>
       <div className="login-page">
         <h1 className="login-title">Login</h1>
         <input

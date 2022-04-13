@@ -5,6 +5,8 @@ import renderWithRouter from './renderWithRouter';
 import App from '../App';
 
 describe('Testes do componente <Header /> ', () => {
+  const searchTopButtonTestId = 'search-top-btn';
+  const searchButtonTestId = 'search-input';
   it('Teste se a página header possui o botão de perfil', () => {
     const { history } = renderWithRouter(
       <App />,
@@ -33,15 +35,20 @@ describe('Testes do componente <Header /> ', () => {
     history.push('/foods');
     const titleFoods = screen.getByRole('heading', { name: 'Foods', level: 2 });
     expect(titleFoods).toBeInTheDocument();
-    const buttonSearch = screen.getByTestId('search-top-btn');
+    const buttonSearch = screen.getByTestId(searchTopButtonTestId);
     expect(buttonSearch).toBeInTheDocument();
     userEvent.click(buttonSearch);
-    const input = screen.getByTestId('search-input');
+    const input = screen.getByTestId(searchButtonTestId);
     expect(input).toBeInTheDocument();
 
     history.push('/drinks');
     const title = screen.getByRole('heading', { name: 'Drinks', level: 2 });
     expect(title).toBeInTheDocument();
+    const buttonSearchDrinksPage = screen.getByTestId(searchTopButtonTestId);
+    expect(buttonSearchDrinksPage).toBeInTheDocument();
+    userEvent.click(buttonSearchDrinksPage);
+    const inputDrinksPage = screen.getByTestId(searchButtonTestId);
+    expect(inputDrinksPage).toBeInTheDocument();
   });
   it('Testa header em explorar por nacionalidade', () => {
     const { history } = renderWithRouter(
@@ -52,10 +59,10 @@ describe('Testes do componente <Header /> ', () => {
       name: 'Explore Nationalities', level: 2,
     });
     expect(title).toBeInTheDocument();
-    const buttonSearch = screen.getByTestId('search-top-btn');
+    const buttonSearch = screen.getByTestId(searchTopButtonTestId);
     expect(buttonSearch).toBeInTheDocument();
     userEvent.click(buttonSearch);
-    const input = screen.getByTestId('search-input');
+    const input = screen.getByTestId(searchButtonTestId);
     expect(input).toBeInTheDocument();
   });
   it('Testa header em Explorar', () => {

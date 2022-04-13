@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import '../css/Favorites.css';
 // Faz a copia
 const copy = require('clipboard-copy');
 
@@ -50,6 +51,7 @@ function FavoriteRecipes() {
     <div>
       <Header />
       <button
+        className="button-profile"
         type="button"
         name="filterFoods"
         id="filterFoods"
@@ -59,6 +61,7 @@ function FavoriteRecipes() {
         Foods
       </button>
       <button
+        className="button-profile"
         type="button"
         name="filterDrinks"
         id="filterDrinks"
@@ -68,6 +71,7 @@ function FavoriteRecipes() {
         Drinks
       </button>
       <button
+        className="button-profile"
         type="button"
         name="filterAll"
         id="filterAll"
@@ -78,6 +82,7 @@ function FavoriteRecipes() {
       </button>
       { arrayToRender && arrayToRender.map((item, index) => (
         <div
+          className="favorites-page"
           key={ item.id }
         >
           <div
@@ -97,6 +102,7 @@ function FavoriteRecipes() {
               {`${item.nationality} - ${item.category} ${item.alcoholicOrNot} `}
             </h3>
             <img
+              className="favorite-img"
               data-testid={ `${index}-horizontal-image` }
               src={ item.image }
               alt={ `Meal: ${item.name}` }
